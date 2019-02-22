@@ -16,7 +16,7 @@ const view = (state, actions) => (
         <Rotate />
         <SplashScreen state={state.showSplashScreen} />
         <div id="wrapper" class="wrapper">
-            <TopBar state={state.telemetry} switchSettings={actions.settings.setVisibility} />
+            <TopBar msiAdmin={state.msiAdmin} state={state.telemetry} switchSettings={actions.settings.setVisibility} />
             <Settings state={state} actions={actions} />
             <div class="crosshair" />
             <div class="dots" />
@@ -28,7 +28,7 @@ const view = (state, actions) => (
             <div class="controls-box-left">
                 <Clupi state={state} actions={actions} />
                 <Gripper mode={state.mode} state={state.manipulator.gripper} action={actions.manipulator} />
-                <ModeChooser mode={state.mode} setMode={actions.setMode} />
+                {state.msiAdmin && <ModeChooser mode={state.mode} setMode={actions.setMode} />}
             </div>
             <Stream stream={actions.stream} mode={state.mode} />
         </div>
