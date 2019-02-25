@@ -6,6 +6,7 @@ const state = {
         video_devices: [],
     },
 
+    msiAdmin: false,
     showSplashScreen: true,
     mode: 'drive',
     manipulator: {

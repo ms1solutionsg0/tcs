@@ -10,13 +10,14 @@ import { Joystick } from './components/joystick';
 import { Gripper } from './components/gripper';
 import { ModeChooser } from './components/modechooser';
 import { Clupi } from './components/clupi';
+import TouchHandler from "./components/TouchHandler";
 
 const view = (state, actions) => (
-    <main>
+    <TouchHandler state={state.msiAdmin} changeState={actions.setMsiAdmin}>
         <Rotate />
         <SplashScreen state={state.showSplashScreen} />
         <div id="wrapper" class="wrapper">
-            <TopBar state={state.telemetry} switchSettings={actions.settings.setVisibility} />
+            <TopBar msiAdmin={state.msiAdmin} state={state.telemetry} switchSettings={actions.settings.setVisibility} />
             <Settings state={state} actions={actions} />
             <div class="crosshair" />
             <div class="dots" />
@@ -28,11 +29,11 @@ const view = (state, actions) => (
             <div class="controls-box-left">
                 <Clupi state={state} actions={actions} />
                 <Gripper mode={state.mode} state={state.manipulator.gripper} action={actions.manipulator} />
-                <ModeChooser mode={state.mode} setMode={actions.setMode} />
+                {state.msiAdmin && <ModeChooser mode={state.mode} setMode={actions.setMode} />}
             </div>
             <Stream stream={actions.stream} mode={state.mode} />
         </div>
-    </main>
+    </TouchHandler>
 );
 
 export default view;

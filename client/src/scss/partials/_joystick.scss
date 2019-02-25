@@ -9,17 +9,14 @@
         width: 30vw;
         height: 30vw;
     }
-
     @include small2x {
-        width: 30vw ;
-        height: 30vw ;
+        width: 30vw;
+        height: 30vw;
     }
-
     @include medium {
         width: 25vw;
         height: 25vw;
     }
-
     &__image {
         width: 80%;
         height: auto;
@@ -27,12 +24,32 @@
         right: 15%;
         bottom: 15%;
     }
-
     &--hide {
         visibility: hidden;
     }
 }
 
-.nipple .back {
-    opacity: 0 !important;
+// For NippleJs
+.nipple {
+    .front {
+        animation: pulse 2.5s infinite ease-in-out;
+        &--no-animate {
+            animation: none !important;
+        }
+    }
+    .back {
+        opacity: 0 !important;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }

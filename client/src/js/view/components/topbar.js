@@ -1,23 +1,26 @@
 import { h } from 'hyperapp';
 
-export const TopBar = ({ state, switchSettings }) =>
+export const TopBar = ({ msiAdmin, state, switchSettings }) =>
     <section id="topbar" class="topbar">
         <img alt="" class="topbar_logo" src={require('../../../img/ui/turtle-logo.svg')} />
         <div class="topbar_indicators">
             <IndicatorBattery batteryLevel={state.batteryLevel} />
-            <IndicatorSignal signalLevel={state.signalLevel} />
+            {msiAdmin&& <IndicatorSignal signalLevel={state.signalLevel} />}
         </div>
         <div id="topbar_actions" class="topbar_actions">
             {/* <img class="topbar_actions_action" id="button-screenrecord" src={require("../../../img/ui/nav-bar-rec.svg")}/> */}
             {/* <a id="snap-download-a">  */}
             {/* <img class="topbar_actions_action" id="button-screenshot" src={require("../../../img/ui/nav-bar-snap.svg")}/> */}
             {/* </a>  */}
-            <ActionFullscreen />
+            { msiAdmin && <ActionFullscreen /> }
         </div>
 
-        <div role="button" class="topbar_menu" onmousedown={() => switchSettings()}>
-            <div class="topbar_menu_bar" />
-        </div>
+        {
+            msiAdmin &&
+            <div role="button" class="topbar_menu" onmousedown={() => switchSettings()}>
+                <div class="topbar_menu_bar" />
+            </div>
+        }
     </section>;
 
 const IndicatorBattery = ({ batteryLevel }) =>
