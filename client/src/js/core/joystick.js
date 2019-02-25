@@ -43,7 +43,7 @@ export const joystick = function joystick({ el, motors }) {
         speed = 0;
         console.log(eventEnd);
         motors.stop();
-        setTimeout(() => manager[0].el.childNodes[1].classList.remove("front--no-animate"), 5000);
+        setTimeout(() => manager[0].el.childNodes[1].classList.remove("front--no-animate"), 7000);
     });
 
     const convertToArrOfDirections = (angle) => {
