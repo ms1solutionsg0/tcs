@@ -58,19 +58,19 @@ function isEqual(arr1, arr2) {
 	return true;
 }
 
-export default function TouchHandler({state, changeState}, children) {
+export default function TouchHandler({ state, changeState }, children) {
 	function clickHandler(evt) {
 		const { clientX, clientY } = evt;
 		const quadrant = getQuadrant(clientX, clientY);
-	
+
 		if (quadrant) {
 			quadrantQueue.push(quadrant);
-	
+
 			if (isEqual(quadrantQueue, TOUCH_ORDER)) {
 				quadrantQueue = [];
 				changeState(!state);
 			}
-	
+
 			if (quadrantQueue.length > TOUCH_ORDER.length) {
 				quadrantQueue = [];
 			}
