@@ -21,6 +21,10 @@ export const joystick = function joystick({ el, motors }) {
         interval = setInterval(() => motors.set(speed, direction), 100);
     });
 
+    manager.on('pressure', () => {
+        manager[0].el.childNodes[1].classList.add("front--no-animate");
+    });
+
     const getDataFromJoystick = (eventMove, data) => {
         if (!Object.prototype.hasOwnProperty.call(data, 'direction')) { return; }
         speed = treshold(data.force);
@@ -34,6 +38,7 @@ export const joystick = function joystick({ el, motors }) {
 
     manager.on('end', (eventEnd) => {
         clearInterval(interval);
+        manager[0].el.childNodes[1].classList.remove("front--no-animate");
         console.log('[joystick interval]', interval);
         speed = 0;
         console.log(eventEnd);
