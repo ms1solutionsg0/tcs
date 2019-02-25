@@ -29,17 +29,17 @@
     }
 }
 
-.nipple .back {
-    opacity: 0 !important;
-}
-
 // For NippleJs
-.nipple .front {
-    animation: pulse 2.5s infinite ease-in-out;
-}
-
-.nipple .front--no-animate {
-    animation: none !important;
+.nipple {
+    .front {
+        animation: pulse 2.5s infinite ease-in-out;
+        &--no-animate {
+            animation: none !important;
+        }
+    }
+    .back {
+        opacity: 0 !important;
+    }
 }
 
 @keyframes pulse {
