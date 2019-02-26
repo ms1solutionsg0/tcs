@@ -5,6 +5,22 @@
     width: 100%;
     background-color: $background-color;
     z-index: 9;
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+
+    -webkit-user-select: none;
+    /* Safari */
+
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+
+    -moz-user-select: none;
+    /* Firefox */
+
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+
+    user-select: none;
     @include small {
         height: $topbar-height-small;
     }
