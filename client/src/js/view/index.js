@@ -12,8 +12,10 @@ import { ModeChooser } from './components/modechooser';
 import { Clupi } from './components/clupi';
 import TouchHandler from "./components/TouchHandler";
 
-const view = (state, actions) => (
-    <TouchHandler state={state.msiAdmin} changeState={actions.setMsiAdmin}>
+const ADMIN_PINS = ["1337", "1940", "1985"];
+
+const MAIN_PAGE = (state, actions) => (
+    <main>
         <Rotate />
         <SplashScreen state={state.showSplashScreen} />
         <div id="wrapper" class="wrapper">
@@ -33,6 +35,36 @@ const view = (state, actions) => (
             </div>
             <Stream stream={actions.stream} mode={state.mode} />
         </div>
+    </main>
+);
+
+const ADMIN_PAGE = (state, actions) => (
+    <main>
+        <TopBar msiAdmin={state.msiAdmin} state={state.telemetry} switchSettings={actions.settings.setVisibility} />
+        <div class="dots" />
+        <div class="admin-box">
+            <h2>Login for <bold>Administrators</bold> only</h2>
+            <form class="admin-box__register-form">
+                <input type="password" placeholder="pin/password" id="password" />
+                <button type="button" id="login-btn" onclick={() => onClickAdmin(state, actions)}>
+                    Login
+                </button>
+            </form>
+        </div>
+    </main>
+);
+
+const onClickAdmin = (state, actions) => {
+    const pass = document.getElementById('password').value;
+    if (ADMIN_PINS.includes(pass)) {
+        actions.setMsiAdmin(!state.msiAdmin);
+    }
+    actions.setMsiAdminPending(!state.msiAdminPending);
+}
+
+const view = (state, actions) => (
+    <TouchHandler msiAdmin={state.msiAdmin} setMsiAdmin={actions.setMsiAdmin} msiAdminPending={state.msiAdminPending} setMsiAdminPending={actions.setMsiAdminPending}>
+        {state.msiAdminPending ? ADMIN_PAGE(state, actions) : MAIN_PAGE(state, actions)}
     </TouchHandler>
 );
 
