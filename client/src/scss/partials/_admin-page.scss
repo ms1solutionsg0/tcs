@@ -1,0 +1,50 @@
+$color-button: #4caf50;
+#login-btn:hover,
+#login-btn:focus,
+#login-btn:active {
+    color: black;
+    background-color: darken($color: $color-button, $amount: 3);
+}
+
+.admin-box {
+    font-family: "Roboto", sans-serif;
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    background-color: rgba(#606060, 0.45);
+    padding: 3rem;
+    box-sizing: border-box;
+    text-align: center;
+    &__register-form {
+        text-align: center;
+        font-size: 14px;
+        justify-content: center;
+        input {
+            display: block;
+            outline: 1;
+            background: #f2f2f2;
+            width: 100%;
+            margin: 0 0 15px;
+            padding: 15px 0px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        button {
+            text-transform: uppercase;
+            border-radius: 100px;
+            border: none;
+            outline: none;
+            background: $color-button;
+            width: 50%;
+            padding: 15px;
+            color: #ffffff;
+            box-shadow: 0px 5px 5px rgba(#ffffff,0.6);
+            &:active {
+                box-shadow: 0px 3px 3px rgba(#ffffff,0.6);
+                transform: translateY(2px);
+            }
+        }
+    }
+}

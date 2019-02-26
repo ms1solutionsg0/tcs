@@ -23,7 +23,6 @@ export const joystick = function joystick({ el, motors }) {
 
     manager.on('pressure', () => {
         manager[0].el.childNodes[1].classList.add("front--no-animate");
-        console.log('pressure:', manager[0].el.childNodes[1].classList);
     });
 
     const getDataFromJoystick = (eventMove, data) => {
