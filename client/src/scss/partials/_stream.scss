@@ -13,11 +13,14 @@
     min-height: 100%;
     width: auto;
     height: auto;
-
     &--drive-mode {
-        bottom: -30%;
+        @include small {
+            top: $topbar-height-small;
+        }
+        @include medium {
+            top: $topbar-height-medium;
+        }
     }
-
     &--grab-mode {
         bottom: 0;
     }
