@@ -25,13 +25,7 @@ Stream.prototype.start = function() {
 }
 
 Stream.prototype.createPeerConnection = function() {
-    let peerConnectionConf = {
-        "iceServers": [{
-            "urls": ["stun:" + this.hostname + ":3478"]
-        }]
-    };
-
-    this.peerConnection = new window.RTCPeerConnection(peerConnectionConf);
+    this.peerConnection = new window.RTCPeerConnection(null);
 
     this.peerConnection.onicecandidate = (event) => {
         if (event.candidate) {
