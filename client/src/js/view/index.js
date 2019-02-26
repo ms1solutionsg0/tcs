@@ -46,7 +46,7 @@ const ADMIN_PAGE = (state, actions) => (
             <h2>Login for <bold>Administrators</bold> only</h2>
             <form class="admin-box__register-form">
                 <input type="password" placeholder="pin/password" id="password" />
-                <button type="button" id="login-btn" onclick={() => onClickAdmin(state, actions)}>
+                <button type="button" class="admin-box__register-form--button" id="login-btn" onclick={() => onClickAdmin(state, actions)}>
                     Login
                 </button>
             </form>
@@ -56,7 +56,7 @@ const ADMIN_PAGE = (state, actions) => (
 
 const onClickAdmin = (state, actions) => {
     const pass = document.getElementById('password').value;
-    if (ADMIN_PINS.includes(pass)) {
+    if (pass && ADMIN_PINS.includes(pass)) {
         actions.setMsiAdmin(!state.msiAdmin);
     }
     actions.setMsiAdminPending(!state.msiAdminPending);

@@ -16,6 +16,7 @@ $color-button: #4caf50;
     background-color: rgba(#606060, 0.45);
     padding: 3rem;
     box-sizing: border-box;
+    text-align: center;
     &__register-form {
         text-align: center;
         font-size: 14px;
@@ -33,12 +34,17 @@ $color-button: #4caf50;
         button {
             text-transform: uppercase;
             border-radius: 100px;
-            outline: 1;
+            border: none;
+            outline: none;
             background: $color-button;
             width: 50%;
             padding: 15px;
             color: #ffffff;
-            border-color: black;
+            box-shadow: 0px 5px 5px rgba(#ffffff,0.6);
+            &:active {
+                box-shadow: 0px 3px 3px rgba(#ffffff,0.6);
+                transform: translateY(2px);
+            }
         }
     }
 }
