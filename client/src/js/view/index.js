@@ -14,7 +14,7 @@ import TouchHandler from "./components/TouchHandler";
 
 const ADMIN_PINS = ["1337", "1940", "1985"];
 
-const MAIN_PAGE = (state, actions) => (
+const mainPage = (state, actions) => (
     <main>
         <Rotate />
         <SplashScreen state={state.showSplashScreen} />
@@ -38,7 +38,7 @@ const MAIN_PAGE = (state, actions) => (
     </main>
 );
 
-const ADMIN_PAGE = (state, actions) => (
+const adminPage = (state, actions) => (
     <main>
         <TopBar msiAdmin={state.msiAdmin} state={state.telemetry} switchSettings={actions.settings.setVisibility} />
         <div class="dots" />
@@ -64,7 +64,7 @@ const onClickAdmin = (state, actions) => {
 
 const view = (state, actions) => (
     <TouchHandler msiAdmin={state.msiAdmin} setMsiAdmin={actions.setMsiAdmin} msiAdminPending={state.msiAdminPending} setMsiAdminPending={actions.setMsiAdminPending}>
-        {state.msiAdminPending ? ADMIN_PAGE(state, actions) : MAIN_PAGE(state, actions)}
+        {state.msiAdminPending ? adminPage(state, actions) : mainPage(state, actions)}
     </TouchHandler>
 );
 
