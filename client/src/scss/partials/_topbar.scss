@@ -72,7 +72,6 @@
         display: flex;
         flex-flow: row;
         justify-content: center;
-
         &_action {
             @include vertical-align();
             position: relative;
@@ -81,7 +80,6 @@
                 height: 10px;
                 margin: 0 10px;
             }
-
             @include medium {
                 height: 20px;
                 margin: 0 15px;

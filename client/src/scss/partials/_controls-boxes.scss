@@ -1,11 +1,12 @@
 .controls-box-left {
     position: absolute;
-    left: 0;
+    left: 5%;
     bottom: 0;
     display: flex;
     flex-flow: column;
     background: rgba($background-color, 0.6);
     min-width: 250px;
+    z-index: 15;
 
     @include small {
         width: 40vw;
@@ -30,7 +31,7 @@
     bottom: 0;
     display: flex;
     flex-flow: column;
-    z-index: 1;
+    z-index: 15;
 
     @include small {
         width: 30vw;

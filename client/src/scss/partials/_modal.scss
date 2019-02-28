@@ -1,0 +1,54 @@
+.modal {
+    background-color: rgba($color: darken($color: darkslategray, $amount: 10), $alpha: 0.85);
+    position: fixed;
+    height: 80%;
+    width: 80%;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+    animation: fade-fast 1s;
+    z-index: 920;
+
+    &--content {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+    &--background {
+        background-color: rgba($color: darkslategray, $alpha: 0.85);
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        z-index: 900;
+        padding: 10px;
+    }
+    &--close {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        font-size: 4rem;
+        cursor: pointer;
+        transition-duration: 0.2s;
+        font-weight: bold;
+        &:hover,
+        &:active {
+            color: $green-dark;
+            cursor: pointer;
+            transform: scale(1.5);
+            transition-duration: 0.2s;
+        }
+    }
+}
+
+@keyframes fade-fast {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
