@@ -31,7 +31,7 @@
     bottom: 0;
     display: flex;
     flex-flow: column;
-    z-index: 15;
+    z-index: 5;
 
     @include small {
         width: 30vw;

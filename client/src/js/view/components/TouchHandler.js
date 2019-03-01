@@ -12,24 +12,18 @@ const TOUCH_ORDER = [QUADRANTS.TOP_LEFT, QUADRANTS.BOTTOM_LEFT, QUADRANTS.TOP_LE
 let quadrantQueue = [];
 
 function isTopLeft(x, y) {
-	console.log('x top left:', x <= TOUCH_BOX_SIZE);
-	console.log('y top left:', y <= TOUCH_BOX_SIZE);
 	return x <= TOUCH_BOX_SIZE && y <= TOUCH_BOX_SIZE;
 }
 
 function isTopRight(x, y) {
-	console.log('is top right');
 	return x >= screen.width - TOUCH_BOX_SIZE && y <= TOUCH_BOX_SIZE;
 }
 
 function isBottomLeft(x, y) {
-	console.log('x bottom left:', x <= TOUCH_BOX_SIZE);
-	console.log('y bottom left:', y >= screen.height - TOUCH_BOX_SIZE);
 	return x <= TOUCH_BOX_SIZE && y >= screen.height - TOUCH_BOX_SIZE;
 }
 
 function isBottomRight(x, y) {
-	console.log('is bottom right');
 	return x >= screen.width - TOUCH_BOX_SIZE && y >= screen.height - TOUCH_BOX_SIZE;
 }
 

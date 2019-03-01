@@ -46,7 +46,7 @@ const onClickAdmin = (state, actions) => {
 
 const view = (state, actions) => (
   <main>
-    <div>
+    <section>
       {state.msiAdminPending && (
         <Modal
           msiAdminPending={state.msiAdminPending}
@@ -55,7 +55,7 @@ const view = (state, actions) => (
           {adminBox(state, actions)}
         </Modal>
       )}
-    </div>
+    </section>
     <Rotate />
     <SplashScreen state={state.showSplashScreen} />
     <div id="wrapper" class="wrapper">
@@ -70,7 +70,9 @@ const view = (state, actions) => (
         state={state.telemetry}
         switchSettings={actions.settings.setVisibility}
       />
-      <Settings state={state} actions={actions} />
+      <section>
+        {state.msiAdmin && <Settings state={state} actions={actions} />}
+      </section>
       <div class="crosshair" />
       <div class="dots" />
       <div class="controls-box-right">
@@ -85,7 +87,6 @@ const view = (state, actions) => (
           motors={actions.motors}
         />
       </div>
-
       <div class="controls-box-left">
         <Clupi state={state} actions={actions} />
         <Gripper
