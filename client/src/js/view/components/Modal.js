@@ -2,7 +2,8 @@ import { h } from "hyperapp";
 
 export default function Modal({ msiAdminPending, setMsiAdminPending }, children) {
     return (
-        <div className="modal">
+        msiAdminPending &&
+            (<div className="modal">
             <div className="modal--background" />
             <div className="modal--content">{children}</div>
             <span
@@ -13,6 +14,6 @@ export default function Modal({ msiAdminPending, setMsiAdminPending }, children)
             >
                 &times;
       </span>
-        </div>
+        </div>)
     );
 };

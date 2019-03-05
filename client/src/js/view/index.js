@@ -47,14 +47,12 @@ const onClickAdmin = (state, actions) => {
 const view = (state, actions) => (
   <main>
     <section>
-      {state.msiAdminPending && (
-        <Modal
-          msiAdminPending={state.msiAdminPending}
-          setMsiAdminPending={actions.setMsiAdminPending}
-        >
-          {adminBox(state, actions)}
-        </Modal>
-      )}
+      <Modal
+        msiAdminPending={state.msiAdminPending}
+        setMsiAdminPending={actions.setMsiAdminPending}
+      >
+        {adminBox(state, actions)}
+      </Modal>
     </section>
     <Rotate />
     <SplashScreen state={state.showSplashScreen} />
