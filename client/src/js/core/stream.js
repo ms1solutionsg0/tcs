@@ -54,6 +54,23 @@ Stream.prototype.createPeerConnection = function() {
 
     this.peerConnection.onremovestream = () => console.log('[stream] remove');
 
+    this.peerConnection.oniceconnectionstatechange = (evt) => {
+        const { iceConnectionState } = this.peerConnection;
+        switch(iceConnectionState) {
+            case "failed":
+            case "disconnected":
+            case "closed":
+                console.log(`[stream] connection state changed to: ${iceConnectionState}`);
+                this.reconnect();
+            default:
+                break;
+        }
+    }
+}
+
+Stream.prototype.reconnect = function() {
+    this.stop();
+    setTimeout(this.start.bind(this), 5000);
 }
 
 Stream.prototype.offer = function() {
@@ -182,7 +199,6 @@ Stream.prototype._onRemoteSdpError = function(event) {
 Stream.prototype.close = function(event) {
     if (this.peerConnection) {
         this.peerConnection.close();
-        this.peerConnection = null;
     }
 }
 
