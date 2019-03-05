@@ -13,46 +13,15 @@ import { Clupi } from "./components/clupi";
 import TouchHandler from "./components/TouchHandler";
 import Modal from "./components/Modal";
 
-const ADMIN_PINS = ["1337", "1940", "1985"];
-
-const adminBox = (state, actions) => {
-  return (
-    <div class="admin-box">
-      <h2>
-        Login for <bold>Administrators</bold> only
-      </h2>
-      <form class="admin-box__register-form">
-        <input type="password" placeholder="pin/password" id="password" />
-        <button
-          type="button"
-          class="admin-box__register-form--button"
-          id="login-btn"
-          onclick={() => onClickAdmin(state, actions)}
-        >
-          Login
-        </button>
-      </form>
-    </div>
-  );
-};
-
-const onClickAdmin = (state, actions) => {
-  const pass = document.getElementById("password").value;
-  if (pass && ADMIN_PINS.includes(pass)) {
-    actions.setMsiAdmin(!state.msiAdmin);
-  }
-  actions.setMsiAdminPending(!state.msiAdminPending);
-};
-
 const view = (state, actions) => (
   <main>
     <section>
       <Modal
         msiAdminPending={state.msiAdminPending}
         setMsiAdminPending={actions.setMsiAdminPending}
-      >
-        {adminBox(state, actions)}
-      </Modal>
+        msiAdmin={state.msiAdmin}
+        setMsiAdmin={actions.setMsiAdmin}
+      />
     </section>
     <Rotate />
     <SplashScreen state={state.showSplashScreen} />
