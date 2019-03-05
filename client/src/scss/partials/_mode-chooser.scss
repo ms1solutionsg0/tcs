@@ -1,8 +1,15 @@
 .mode-chooser {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
+    .radio {
+        :not(:last-child) {
+            padding-left: 2rem;
+        }
+        padding-left: 4rem;
+
+    }
     @include small {
         height: 10vw;
     }
