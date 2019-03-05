@@ -15,7 +15,7 @@ const onClickAdmin = (
   setMsiAdminPending(!msiAdminPending);
 };
 
-export default function Modal({ msiAdminPending, setMsiAdminPending, msiAdmin, setMsiAdmin }) {
+export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdmin, setMsiAdmin }) {
   return (
     msiAdminPending && (
       <div className="modal">

@@ -11,12 +11,12 @@ import { Gripper } from "./components/gripper";
 import { ModeChooser } from "./components/modechooser";
 import { Clupi } from "./components/clupi";
 import TouchHandler from "./components/TouchHandler";
-import Modal from "./components/Modal";
+import AdminModal from "./components/AdminModal";
 
 const view = (state, actions) => (
   <main>
     <section>
-      <Modal
+      <AdminModal
         msiAdminPending={state.msiAdminPending}
         setMsiAdminPending={actions.setMsiAdminPending}
         msiAdmin={state.msiAdmin}
