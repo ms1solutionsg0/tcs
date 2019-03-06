@@ -12,13 +12,13 @@
     min-width: 100%;
     min-height: 100%;
     width: auto;
-    height: auto;
+    height: 100%;
     &--drive-mode {
         @include small {
-            top: $topbar-height-small;
+            top: -1%;
         }
         @include medium {
-            top: $topbar-height-medium;
+            top: -1.7%;
         }
     }
     &--grab-mode {
