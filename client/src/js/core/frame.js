@@ -16,14 +16,28 @@ Frame.prototype.motor = function(value) {
     // Multiplying by this value should make possible to write directly to PWM
     // Current range is 0 - 127 with first bit as direction
     // Gets 0-100 
-    let k = 1.27;
+    let k = 1.05;
     return Math.round(Math.abs(value * k) | (value & 0x80));
 };
 
-Frame.prototype.motors = function(speed, directions) {   
-    this.motorsArr.forEach ((motor, index) => {
-        this.motorsArr[index] = Math.abs(speed * 1.27) | (directions[index] << 7);
+Frame.prototype.motors = function (speed, directions, directionList) {
+    const stringDirections = directions.toString();
+    const stringDirectionList = [directionList.left.toString(), directionList.right.toString()];
+
+    const turn = (stringDirectionList.includes(stringDirections));
+
+    this.motorsArr.forEach((motor, index) => {
+        if (turn) {
+            if (!directions[index]) {
+                return this.motorsArr[index] = Math.abs(speed * .75) | (directions[index] << 7);
+            }
+
+            return this.motorsArr[index] = Math.abs(0) | (directions[index] << 7);
+        }
+
+        this.motorsArr[index] = Math.abs(speed * 1.05) | (directions[index] << 7);
     });
+
     return this.motorsBuf;
 };
 
