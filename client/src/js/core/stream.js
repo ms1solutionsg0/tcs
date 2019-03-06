@@ -58,7 +58,6 @@ Stream.prototype.createPeerConnection = function() {
         const { iceConnectionState } = this.peerConnection;
         switch(iceConnectionState) {
             case "failed":
-            case "disconnected":
             case "closed":
                 console.log(`[stream] connection state changed to: ${iceConnectionState}`);
                 this.reconnect();
