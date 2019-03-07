@@ -9,8 +9,8 @@ export const Motors = function(sockets) {
     this.direction = {
         forward : [0, 0, 0, 0],
         backward: [1, 1, 1, 1],
-        left: [0, 0, 1, 0],
-        right: [0, 0, 0, 1]
+        left: [0, 0, 0.8, 0],
+        right: [0, 0, 0, 0.8]
     };
 };
 

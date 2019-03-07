@@ -23,16 +23,17 @@ Frame.prototype.motor = function(value) {
 Frame.prototype.motors = function (speed, directions, directionList) {
     const stringDirections = directions.toString();
     const stringDirectionList = [directionList.left.toString(), directionList.right.toString()];
-
     const turn = (stringDirectionList.includes(stringDirections));
 
     this.motorsArr.forEach((motor, index) => {
         if (turn) {
             if (!directions[index]) {
-                return this.motorsArr[index] = Math.abs(speed * .75) | (directions[index] << 7);
+                return this.motorsArr[index] = Math.abs(speed) | (directions[index] << 7);
             }
 
-            return this.motorsArr[index] = Math.abs(0) | (directions[index] << 7);
+            const slowerIndex = + (index === 2);
+            this.motorsArr[index] = Math.abs(0) | (directions[index] << 7);
+            return this.motorsArr[slowerIndex] = Math.abs(speed * .5) | (directions[index] << 7);
         }
 
         this.motorsArr[index] = Math.abs(speed * 1.05) | (directions[index] << 7);
