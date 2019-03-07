@@ -12,6 +12,11 @@ export const Frame = function() {
     this.batteryArr = new Uint8Array(this.gripperBuf);
 };
 
+const FRONT_RIGHT_INDEX = 0;
+const FRONT_LEFT_INDEX = 1;
+const BACK_LEFT_INDEX = 2;
+const BACK_RIGHT_INDEX = 3;
+
 Frame.prototype.motor = function(value) {
     // Multiplying by this value should make possible to write directly to PWM
     // Current range is 0 - 127 with first bit as direction
@@ -22,19 +27,30 @@ Frame.prototype.motor = function(value) {
 
 Frame.prototype.motors = function (speed, directions, directionList) {
     const stringDirections = directions.toString();
-    const stringDirectionList = [directionList.left.toString(), directionList.right.toString()];
-    const turn = (stringDirectionList.includes(stringDirections));
+    const stringDirectionLeft = directionList.left.toString();
+    const stringDirectionRight = directionList.right.toString();
 
     this.motorsArr.forEach((motor, index) => {
-        if (turn) {
-            if (!directions[index]) {
-                return this.motorsArr[index] = Math.abs(speed) | (directions[index] << 7);
+        if (stringDirections === stringDirectionLeft) {
+            if (index === BACK_LEFT_INDEX) {
+                return this.motorsArr[index] = 0 | (directions[index] << 7);
             }
 
-            const slowerIndex = + (index === 2);
-            this.motorsArr[index] = Math.abs(0) | (directions[index] << 7);
-            return this.motorsArr[slowerIndex] = Math.abs(speed * .5) | (directions[index] << 7);
+            if (index === FRONT_LEFT_INDEX) {
+                return this.motorsArr[index] = Math.abs(speed * .5) | (directions[index] << 7);
+            }
         }
+
+        if (stringDirections === stringDirectionRight) {
+            if (index === BACK_RIGHT_INDEX) {
+                return this.motorsArr[index] = 0 | (directions[index] << 7);
+            }
+
+            if (index === FRONT_RIGHT_INDEX) {
+                return this.motorsArr[index] = Math.abs(speed * .5) | (directions[index] << 7);
+            }
+        }
+
 
         this.motorsArr[index] = Math.abs(speed * 1.05) | (directions[index] << 7);
     });

@@ -1,16 +1,16 @@
 import { Frame } from './frame';
 import { helper } from '../utils/helper';
 
-
 export const Motors = function(sockets) { 
     this.sockets = sockets;
     this.frame = new Frame();
 
+    // Rover Wheel Alignment: [Top Right, Top Left, Bottom Left, Bottom Right]
     this.direction = {
         forward : [0, 0, 0, 0],
         backward: [1, 1, 1, 1],
-        left: [0, 0, 0.8, 0],
-        right: [0, 0, 0, 0.8]
+        left: [0, 0, 0.5, 0],
+        right: [0, 0, 0, 0.5]
     };
 };
 
