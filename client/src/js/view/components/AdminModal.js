@@ -1,4 +1,5 @@
 import { h } from "hyperapp";
+import keyboardJS from "keyboardjs";
 
 const ADMIN_PINS = ["1337", "1940", "1985"];
 
@@ -16,6 +17,16 @@ const onClickAdmin = (
 };
 
 export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdmin, setMsiAdmin }) {
+  keyboardJS.bind("enter", function (e) {
+    e.preventDefault();
+    e.preventRepeat();
+    if (!msiAdminPending) {
+      return;
+    }
+
+    onClickAdmin(msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPending);
+  });
+
   return (
     msiAdminPending && (
       <div className="modal">
