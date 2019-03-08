@@ -1,16 +1,16 @@
 import { Frame } from './frame';
 import { helper } from '../utils/helper';
 
-
 export const Motors = function(sockets) { 
     this.sockets = sockets;
     this.frame = new Frame();
 
+    // Rover Wheel Alignment: [Top Right, Top Left, Bottom Left, Bottom Right]
     this.direction = {
         forward : [0, 0, 0, 0],
         backward: [1, 1, 1, 1],
-        left: [1, 0, 1, 0],
-        right: [0, 1, 0, 1]
+        left: [0, 0, 0.5, 0],
+        right: [0, 0, 0, 0.5]
     };
 };
 
@@ -32,7 +32,7 @@ Motors.prototype.stop = function() {
 
 Motors.prototype.set = function (speed, directions) {
     if (this.sockets.io.connected) {
-        let frame = this.frame.motors(speed, directions);
+        const frame = this.frame.motors(speed, directions, this.direction);
         console.log(helper.arrayToHex(this.frame.motorsArr));
         this.sockets.sendMotors(frame);
     } else {

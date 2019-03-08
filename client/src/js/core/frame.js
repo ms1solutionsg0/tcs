@@ -12,18 +12,52 @@ export const Frame = function() {
     this.batteryArr = new Uint8Array(this.gripperBuf);
 };
 
+const FRONT_RIGHT_INDEX = 0;
+const FRONT_LEFT_INDEX = 1;
+const BACK_LEFT_INDEX = 2;
+const BACK_RIGHT_INDEX = 3;
+
+const slowK = 0.5;
+const k = 1.05;
+
 Frame.prototype.motor = function(value) {
     // Multiplying by this value should make possible to write directly to PWM
     // Current range is 0 - 127 with first bit as direction
     // Gets 0-100 
-    let k = 1.27;
     return Math.round(Math.abs(value * k) | (value & 0x80));
 };
 
-Frame.prototype.motors = function(speed, directions) {   
-    this.motorsArr.forEach ((motor, index) => {
-        this.motorsArr[index] = Math.abs(speed * 1.27) | (directions[index] << 7);
+Frame.prototype.motors = function (speed, directions, directionList) {
+    const stringDirections = directions.toString();
+    const stringDirectionLeft = directionList.left.toString();
+    const stringDirectionRight = directionList.right.toString();
+
+    this.motorsArr.forEach((motor, index) => {
+        if (stringDirections === stringDirectionLeft) {
+            if (index === BACK_LEFT_INDEX) {
+                return (this.motorsArr[index] = directions[index] << 7);
+            }
+
+            if (index === FRONT_LEFT_INDEX) {
+                return (this.motorsArr[index] =
+                    Math.abs(speed * slowK) | (directions[index] << 7));
+            }
+        }
+
+        if (stringDirections === stringDirectionRight) {
+            if (index === BACK_RIGHT_INDEX) {
+                return (this.motorsArr[index] = directions[index] << 7);
+            }
+
+            if (index === FRONT_RIGHT_INDEX) {
+                return (this.motorsArr[index] =
+                    Math.abs(speed * slowK) | (directions[index] << 7));
+            }
+        }
+
+        this.motorsArr[index] = Math.abs(speed * k) | (directions[index] << 7);
     });
+
     return this.motorsBuf;
 };
 
