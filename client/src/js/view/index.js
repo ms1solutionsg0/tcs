@@ -7,9 +7,9 @@ import { Stream } from "./components/stream";
 import { Settings } from "./components/settings";
 import { Manipulator } from "./components/manipulator";
 import { Joystick } from "./components/joystick";
-import { Gripper } from "./components/gripper";
-import { ModeChooser } from "./components/modechooser";
-import { Clupi } from "./components/clupi";
+// import { Gripper } from "./components/gripper";
+// import { ModeChooser } from "./components/modechooser";
+// import { Clupi } from "./components/clupi";
 import TouchHandler from "./components/TouchHandler";
 import AdminModal from "./components/AdminModal";
 
@@ -54,7 +54,7 @@ const view = (state, actions) => (
           motors={actions.motors}
         />
       </div>
-      <div class="controls-box-left">
+      {/* <div class="controls-box-left">
         <Clupi state={state} actions={actions} />
         <Gripper
           mode={state.mode}
@@ -64,7 +64,7 @@ const view = (state, actions) => (
         {state.msiAdmin && (
           <ModeChooser mode={state.mode} setMode={actions.setMode} />
         )}
-      </div>
+      </div> */}
       <Stream stream={actions.stream} mode={state.mode} />
     </div>
   </main>
