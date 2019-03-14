@@ -2,18 +2,18 @@ import { h } from "hyperapp";
 import keyboardJS from "keyboardjs";
 
 const ADMIN_PINS = ["1337", "1940", "1985"];
+const MODAL_TIMEOUT = 30000;
 
-const onClickAdmin = (
-  msiAdmin,
-  setMsiAdmin,
-  msiAdminPending,
-  setMsiAdminPending
-) => {
+const onClickAdmin = ( msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPending ) => {
   const pass = document.getElementById("password").value;
   if (pass && ADMIN_PINS.includes(pass)) {
     setMsiAdmin(!msiAdmin);
   }
   setMsiAdminPending(!msiAdminPending);
+};
+
+const timeoutModal = setMsiAdminPending => {
+  setTimeout(() => setMsiAdminPending(false), MODAL_TIMEOUT);
 };
 
 export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdmin, setMsiAdmin }) {
@@ -29,7 +29,7 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
 
   return (
     msiAdminPending && (
-      <div className="modal">
+      <div className="modal" oncreate={() => timeoutModal(setMsiAdminPending)}>
         <div className="modal--background" />
         <div className="modal--content">
           <div class="admin-box">
