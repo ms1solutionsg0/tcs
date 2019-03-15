@@ -2,13 +2,14 @@ import { h } from "hyperapp";
 import keyboardJS from "keyboardjs";
 
 const ADMIN_PINS = ["1337", "1940", "1985"];
-const MODAL_TIMEOUT = 30000;
+const MODAL_TIMEOUT = 30000; // 30 seconds
 let TIMEOUT;
 
-const onClickAdmin = ( msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPending ) => {
+const onClickAdmin = ( msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPending, setAdminTimeout ) => {
   const pass = document.getElementById("password").value;
   if (pass && ADMIN_PINS.includes(pass)) {
     setMsiAdmin(!msiAdmin);
+    setAdminTimeout();
   }
   setMsiAdminPending(!msiAdminPending);
 };
@@ -27,7 +28,7 @@ const resetModalTimeout = (setMsiAdminPending) => {
   setModalTimeout(setMsiAdminPending);
 };
 
-export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdmin, setMsiAdmin }) {
+export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdmin, setMsiAdmin, setAdminTimeout }) {
   keyboardJS.bind("enter", function (e) {
     e.preventDefault();
     e.preventRepeat();
@@ -35,7 +36,7 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
       return;
     }
 
-    onClickAdmin(msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPending);
+    onClickAdmin(msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPending, setAdminTimeout);
   });
 
   return (
@@ -58,7 +59,8 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
                     msiAdmin,
                     setMsiAdmin,
                     msiAdminPending,
-                    setMsiAdminPending
+                    setMsiAdminPending,
+                    setAdminTimeout
                   )
                 }
               >
