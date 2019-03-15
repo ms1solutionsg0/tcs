@@ -13,7 +13,7 @@ const onClickAdmin = ( msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPendin
   setMsiAdminPending(!msiAdminPending);
 };
 
-const setModalTimeout = setMsiAdminPending => {
+const setModalTimeout = (setMsiAdminPending) => {
   TIMEOUT = setTimeout(() => setMsiAdminPending(false), MODAL_TIMEOUT);
 };
 
@@ -25,7 +25,7 @@ const clearModalTimeout = (done) => {
 const resetModalTimeout = (setMsiAdminPending) => {
   clearModalTimeout();
   setModalTimeout(setMsiAdminPending);
-}
+};
 
 export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdmin, setMsiAdmin }) {
   keyboardJS.bind("enter", function (e) {
