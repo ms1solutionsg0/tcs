@@ -69,6 +69,7 @@ export default function TouchHandler({ msiAdmin, setMsiAdmin, msiAdminPending, s
 			if (isEqual(quadrantQueue, TOUCH_ORDER)) {
 				quadrantQueue = [];
 				msiAdmin ? setMsiAdmin(!msiAdmin) && clearAdminTimeout() : setMsiAdminPending(!msiAdminPending);
+				quadrantQueue = [];
 			}
 
 			if (quadrantQueue.length > TOUCH_ORDER.length) {
