@@ -9,7 +9,8 @@ const QUADRANTS = {
 };
 const TOUCH_ORDER = [QUADRANTS.TOP_LEFT, QUADRANTS.BOTTOM_LEFT, QUADRANTS.TOP_LEFT];
 
-let quadrantQueue = [];
+let quadrantQueue = [...TOUCH_ORDER];
+let touchTimeout;
 
 function isTopLeft(x, y) {
 	return x <= TOUCH_BOX_SIZE && y <= TOUCH_BOX_SIZE;
@@ -64,17 +65,19 @@ export default function TouchHandler({ msiAdmin, setMsiAdmin, msiAdminPending, s
 		const quadrant = getQuadrant(clientX, clientY);
 
 		if (quadrant) {
-			quadrantQueue.push(quadrant);
-
-			if (isEqual(quadrantQueue, TOUCH_ORDER)) {
-				quadrantQueue = [];
-				msiAdmin ? setMsiAdmin(!msiAdmin) && clearAdminTimeout() : setMsiAdminPending(!msiAdminPending);
-				quadrantQueue = [];
+			if (quadrantQueue.length && quadrantQueue[0] === quadrant) {
+				quadrantQueue.shift();
+				if (quadrantQueue.length === 0) {
+					quadrantQueue = [...TOUCH_ORDER];
+					msiAdmin ? setMsiAdmin(!msiAdmin) && clearAdminTimeout() : setMsiAdminPending(!msiAdminPending);
+					return;
+				}
 			}
 
-			if (quadrantQueue.length > TOUCH_ORDER.length) {
-				quadrantQueue = [];
-			}
+			clearTimeout(touchTimeout);
+			setTimeout(() => {
+				quadrantQueue = [...TOUCH_ORDER];
+			}, 5000);
 		}
 	}
 
