@@ -58,7 +58,7 @@ function isEqual(arr1, arr2) {
 	return true;
 }
 
-export default function TouchHandler({ msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPending }, children) {
+export default function TouchHandler({ msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPending, clearAdminTimeout }, children) {
 	function clickHandler(evt) {
 		const { clientX, clientY } = evt;
 		const quadrant = getQuadrant(clientX, clientY);
@@ -68,7 +68,7 @@ export default function TouchHandler({ msiAdmin, setMsiAdmin, msiAdminPending, s
 
 			if (isEqual(quadrantQueue, TOUCH_ORDER)) {
 				quadrantQueue = [];
-				msiAdmin ? setMsiAdmin(!msiAdmin) : setMsiAdminPending(!msiAdminPending);
+				msiAdmin ? setMsiAdmin(!msiAdmin) && clearAdminTimeout() : setMsiAdminPending(!msiAdminPending);
 			}
 
 			if (quadrantQueue.length > TOUCH_ORDER.length) {
