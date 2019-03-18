@@ -3,6 +3,7 @@ export const System = function System(sockets) {
 };
 
 System.prototype.shutdown = function shutdown() {
+    alert('Please press the Poweroff Button on the rover');
     if (this.sockets.io.connected) {
         this.sockets.io.emit('shutdown');
     }
