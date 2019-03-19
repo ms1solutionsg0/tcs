@@ -1,6 +1,6 @@
 import { h } from 'hyperapp';
 
-export const TopBar = ({ msiAdmin, state, switchSettings }) =>
+export const TopBar = ({ msiAdmin, state, switchSettings, toFullScreen, cancelFullScreen }) =>
     <section id="topbar" class="topbar">
         <img alt="" class="topbar_logo" src={require('../../../img/ui/turtle-logo.svg')} />
         <div class="topbar_indicators">
@@ -8,13 +8,8 @@ export const TopBar = ({ msiAdmin, state, switchSettings }) =>
             {msiAdmin && <IndicatorSignal signalLevel={state.signalLevel} />}
         </div>
         <div id="topbar_actions" class="topbar_actions">
-            {/* <img class="topbar_actions_action" id="button-screenrecord" src={require("../../../img/ui/nav-bar-rec.svg")}/> */}
-            {/* <a id="snap-download-a">  */}
-            {/* <img class="topbar_actions_action" id="button-screenshot" src={require("../../../img/ui/nav-bar-snap.svg")}/> */}
-            {/* </a>  */}
-            { msiAdmin && <ActionFullscreen /> }
+            {msiAdmin && <ActionFullscreen toFullScreen={toFullScreen} cancelFullScreen={cancelFullScreen} />}
         </div>
-
         {
             msiAdmin &&
             <div role="button" class="topbar_menu" onmousedown={() => switchSettings()}>
@@ -58,33 +53,22 @@ const signalLevelIcon = (signalLevel) => {
     }
 };
 
-const ActionFullscreen = () =>
+const ActionFullscreen = ({ toFullScreen, cancelFullScreen }) =>
     <img
         alt=""
         class="topbar_actions_action"
         id="button-fullscreen"
         src={require('../../../img/ui/nav-bar-fullscreen.svg')}
-        onmouseup={(event) => toggleFullscreen(event)}
+        onmouseup={(event) => toggleFullscreen(event, toFullScreen, cancelFullScreen)}
     />;
 
 
 // https://gist.github.com/demonixis/5188326
-const toggleFullscreen = (event) => {
-    let element = document.body;
+const toggleFullscreen = (event, toFullScreen, cancelFullScreen) => {
+    let element = document.documentElement;
     if (event instanceof window.HTMLElement) {
         element = event;
     }
 
-    const isFullscreen = document.webkitIsFullScreen || document.mozFullScreen || false;
-
-    element.requestFullScreen = element.requestFullScreen
-        || element.webkitRequestFullScreen
-        || element.mozRequestFullScreen
-        || function a() { return false; };
-    document.cancelFullScreen = document.cancelFullScreen
-        || document.webkitCancelFullScreen
-        || document.mozCancelFullScreen
-        || function a() { return false; };
-
-    isFullscreen ? document.cancelFullScreen() : element.requestFullScreen();
+    toFullScreen(element) || cancelFullScreen();
 };
