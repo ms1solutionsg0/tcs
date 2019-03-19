@@ -22,8 +22,51 @@ const view = (state, actions) => {
     clearTimeout(ADMIN_TIMEOUT);
   }
 
+  const toFullScreen = (element = document.documentElement) => {
+    const isFullscreen =
+      (document.fullScreenElement && document.fullScreenElement !== null) ||
+      (document.mozFullScreen || document.webkitIsFullScreen) ||
+      false;
+
+    if (isFullscreen) {
+      return;
+    }
+
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+      element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullScreen) {
+      element.webkitRequestFullScreen();
+    }
+  };
+
+  const cancelFullScreen = () => {
+    const isFullscreen =
+      (document.fullScreenElement && document.fullScreenElement !== null) ||
+      (document.mozFullScreen || document.webkitIsFullScreen) ||
+      false;
+
+    if (!isFullscreen) {
+      return;
+    }
+
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  };
+
   return (
     <main>
+      {
+        Object.onload = toFullScreen()
+      }
       <section>
         <AdminModal
           msiAdminPending={state.msiAdminPending}
@@ -31,6 +74,8 @@ const view = (state, actions) => {
           msiAdmin={state.msiAdmin}
           setMsiAdmin={actions.setMsiAdmin}
           setAdminTimeout={setAdminTimeout}
+          toFullScreen={toFullScreen}
+          cancelFullScreen={cancelFullScreen}
         />
       </section>
       <Rotate />
@@ -47,6 +92,8 @@ const view = (state, actions) => {
           msiAdmin={state.msiAdmin}
           state={state.telemetry}
           switchSettings={actions.settings.setVisibility}
+          toFullScreen={toFullScreen}
+          cancelFullScreen={cancelFullScreen}
         />
         <section>
           {state.msiAdmin && <Settings state={state} actions={actions} />}

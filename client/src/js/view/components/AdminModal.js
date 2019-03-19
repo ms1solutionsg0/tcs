@@ -5,13 +5,15 @@ const ADMIN_PINS = ["1337", "1940", "1985"];
 const MODAL_TIMEOUT = 30000; // 30 seconds
 let TIMEOUT;
 
-const onClickAdmin = ( msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPending, setAdminTimeout ) => {
+const onClickAdmin = ( msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPending, setAdminTimeout, toFullScreen, cancelFullScreen ) => {
   const pass = document.getElementById("password").value;
   if (pass && ADMIN_PINS.includes(pass)) {
     setMsiAdmin(!msiAdmin);
     setAdminTimeout();
   }
   setMsiAdminPending(!msiAdminPending);
+  cancelFullScreen();
+  toFullScreen();
 };
 
 const setModalTimeout = (setMsiAdminPending) => {
@@ -28,7 +30,7 @@ const resetModalTimeout = (setMsiAdminPending) => {
   setModalTimeout(setMsiAdminPending);
 };
 
-export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdmin, setMsiAdmin, setAdminTimeout }) {
+export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdmin, setMsiAdmin, setAdminTimeout, toFullScreen, cancelFullScreen }) {
   keyboardJS.bind("enter", function (e) {
     e.preventDefault();
     e.preventRepeat();
@@ -36,7 +38,7 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
       return;
     }
 
-    onClickAdmin(msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPending, setAdminTimeout);
+    onClickAdmin(msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPending, setAdminTimeout, toFullScreen, cancelFullScreen);
   });
 
   return (
@@ -60,7 +62,9 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
                     setMsiAdmin,
                     msiAdminPending,
                     setMsiAdminPending,
-                    setAdminTimeout
+                    setAdminTimeout,
+                    toFullScreen,
+                    cancelFullScreen
                   )
                 }
               >
@@ -71,7 +75,7 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
         </div>
         <span
           className="modal--close"
-          onclick={() => setMsiAdminPending(!msiAdminPending)}
+          onclick={() => setMsiAdminPending(!msiAdminPending) && cancelFullScreen() && toFullScreen()}
           role="button"
           tabIndex={0}
         >
