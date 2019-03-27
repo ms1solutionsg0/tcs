@@ -12,8 +12,6 @@ const onClickAdmin = ( msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPendin
     setAdminTimeout();
   }
   setMsiAdminPending(!msiAdminPending);
-  cancelFullScreen();
-  toFullScreen();
 };
 
 const setModalTimeout = (setMsiAdminPending) => {
@@ -51,7 +49,7 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
               Login for <bold>Administrators</bold> only
             </h2>
             <form class="admin-box__register-form" >
-              <input type="password" placeholder="pin/password" id="password" oncreate={element => element.focus()} oninput={() => resetModalTimeout(setMsiAdminPending)} />
+              <input type="password" placeholder="pin/password" id="password" oncreate={element => element.focus()} oninput={() => resetModalTimeout(setMsiAdminPending)} readonly/>
               <button
                 type="button"
                 class="admin-box__register-form--button"
@@ -75,7 +73,7 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
         </div>
         <span
           className="modal--close"
-          onclick={() => setMsiAdminPending(!msiAdminPending) && cancelFullScreen() && toFullScreen()}
+          onclick={() => setMsiAdminPending(!msiAdminPending)}
           role="button"
           tabIndex={0}
         >
