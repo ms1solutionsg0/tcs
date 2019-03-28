@@ -25,12 +25,11 @@ const clearModalTimeout = (done) => {
 };
 
 const resetModalTimeout = (setMsiAdminPending) => {
-  console.log("NEAL: reset modal timeout");
   clearModalTimeout();
   setModalTimeout(setMsiAdminPending);
 };
 
-export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdmin, setMsiAdmin, setAdminTimeout, toFullScreen, cancelFullScreen }) {
+export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdmin, setMsiAdmin, setAdminTimeout }) {
   
   const onKeyClick = (event) => {
     const input = document.getElementById("password");
@@ -63,9 +62,7 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
                     setMsiAdmin,
                     msiAdminPending,
                     setMsiAdminPending,
-                    setAdminTimeout,
-                    toFullScreen,
-                    cancelFullScreen
+                    setAdminTimeout
                   )
                 }
               >
