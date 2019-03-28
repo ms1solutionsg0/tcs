@@ -1,0 +1,80 @@
+// GRID
+$grid-width: 100%;
+$gutter-vertical-large: 2rem;
+$gutter-vertical: 1rem;
+$gutter-vertical-small: .5rem;
+$gutter-horizontal: 2rem;
+
+$button-color: orangered;
+
+.numpad {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    @include user-select;
+
+    &__key {
+
+        &,
+        &:link,
+        &:visited {
+            font-size: 2.25rem;
+            border-radius: 100rem;
+            box-shadow: 0px 5px 10px rgba(black, 0.6);
+            padding: 0.5rem 0rem;
+            background-color: $button-color;
+            cursor: pointer;
+            border: none;
+            color: black;
+        }
+
+        &:active {
+            outline: none;
+            box-shadow: 0px 3px 10px rgba(black, 0.6);
+            transform: translateY(2px);
+            background-color: darken($button-color, 10);
+        }
+
+        &::after {
+            background-color: $button-color;
+        }
+
+        &--clear {
+            font-size: 1.75rem;
+            text-transform: uppercase;
+            padding: 0.75rem 0;
+        }
+    }
+}
+
+.row {
+    max-width: $grid-width;
+    margin: 0 auto;
+    text-align: center;
+
+    &:not(:last-child) {
+        margin-bottom: $gutter-vertical;
+    }
+
+    &:first-child {
+        margin-top: $gutter-vertical-large;
+    }
+
+    @include clearfix;
+
+    [class^="col-"] {
+        display: inline-block;
+
+        &:not(:last-child) {
+            margin-right: $gutter-horizontal;
+        }
+    }
+
+    .col-1-of-3 {
+        width: calc((80% - (2 * #{$gutter-horizontal})) / 3);
+    }
+
+    .col-2-of-3 {
+        width: calc(((80% - (2 * #{$gutter-horizontal})) / 3) * 2 + #{$gutter-horizontal});
+    }
+}

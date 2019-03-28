@@ -1,8 +1,8 @@
 .modal {
     background-color: rgba($color: darken($color: darkslategray, $amount: 10), $alpha: 0.85);
     position: fixed;
-    height: 80%;
-    width: 80%;
+    height: 85%;
+    width: 85%;
     top: 50%;
     left: 50%;
     display: flex;
@@ -16,6 +16,7 @@
         font-size: 1.5rem;
         text-align: center;
     }
+
     &--background {
         background-color: rgba($color: black, $alpha: 0.1);
         position: fixed;
@@ -23,21 +24,17 @@
         width: 100vw;
         padding: 10px;
     }
+
     &--close {
         position: absolute;
-        top: 2rem;
-        right: 2rem;
-        font-size: 4rem;
+        top: .5rem;
+        right: .1rem;
+        font-size: 4.5rem;
         cursor: pointer;
         transition-duration: 0.2s;
         font-weight: bold;
-        &:hover,
-        &:active {
-            color: $green-dark;
-            cursor: pointer;
-            transform: scale(1.5);
-            transition-duration: 0.2s;
-        }
+        z-index: 925;
+        color: white;
     }
 }
 
@@ -45,6 +42,7 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }

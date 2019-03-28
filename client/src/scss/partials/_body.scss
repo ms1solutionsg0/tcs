@@ -11,7 +11,7 @@ body {
   overflow: auto;
 
   -webkit-tap-highlight-color: transparent; /* for remove highlight */
-  user-select: none;
+  @include user-select;
 
   -webkit-user-callout: none;
   -webkit-touch-callout: none;

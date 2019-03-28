@@ -1,11 +1,12 @@
 import { h } from "hyperapp";
-import keyboardJS from "keyboardjs";
+
+import Numpad from "./Numpad";
 
 const ADMIN_PINS = ["1337", "1940", "1985"];
 const MODAL_TIMEOUT = 30000; // 30 seconds
 let TIMEOUT;
 
-const onClickAdmin = ( msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPending, setAdminTimeout, toFullScreen, cancelFullScreen ) => {
+const onClickAdmin = ( msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPending, setAdminTimeout ) => {
   const pass = document.getElementById("password").value;
   if (pass && ADMIN_PINS.includes(pass)) {
     setMsiAdmin(!msiAdmin);
@@ -24,20 +25,22 @@ const clearModalTimeout = (done) => {
 };
 
 const resetModalTimeout = (setMsiAdminPending) => {
+  console.log("NEAL: reset modal timeout");
   clearModalTimeout();
   setModalTimeout(setMsiAdminPending);
 };
 
 export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdmin, setMsiAdmin, setAdminTimeout, toFullScreen, cancelFullScreen }) {
-  keyboardJS.bind("enter", function (e) {
-    e.preventDefault();
-    e.preventRepeat();
-    if (!msiAdminPending) {
-      return;
-    }
-
-    onClickAdmin(msiAdmin, setMsiAdmin, msiAdminPending, setMsiAdminPending, setAdminTimeout, toFullScreen, cancelFullScreen);
-  });
+  
+  const onKeyClick = (event) => {
+    const input = document.getElementById("password");
+    input.value += event.target.innerText;
+    resetModalTimeout(setMsiAdminPending);
+  }
+  
+  const onKeyClear = () => {
+    document.getElementById("password").value = "";
+  }
 
   return (
     msiAdminPending && (
@@ -49,7 +52,7 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
               Login for <bold>Administrators</bold> only
             </h2>
             <form class="admin-box__register-form" >
-              <input type="password" placeholder="pin/password" id="password" oncreate={element => element.focus()} oninput={() => resetModalTimeout(setMsiAdminPending)} readonly/>
+              <input type="password" placeholder="pin" id="password" readonly />
               <button
                 type="button"
                 class="admin-box__register-form--button"
@@ -70,6 +73,7 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
               </button>
             </form>
           </div>
+          <Numpad onKeyClick={onKeyClick} onKeyClear={onKeyClear} />
         </div>
         <span
           className="modal--close"
