@@ -14,6 +14,14 @@ const core = (actions) => {
 
     actions.stream = new Stream();
     window.onbeforeunload = () => actions.stream.stop();
+    window.addEventListener('online', () => {
+        actions.stream.allowReconnect();
+        actions.stream.start();
+    });
+    window.addEventListener('offline', () => {
+        actions.stream.preventReconnect();
+        actions.stream.stop();
+    })
 
     actions.manipulator.m = new Manipulator(sockets);
     actions.clupi.c = new Clupi(sockets);
