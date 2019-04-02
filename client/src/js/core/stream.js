@@ -57,6 +57,8 @@ Stream.prototype.createPeerConnection = function() {
     this.peerConnection.oniceconnectionstatechange = (evt) => {
         const { iceConnectionState } = this.peerConnection;
         switch(iceConnectionState) {
+            case "connected":
+                break;
             case "failed":
             case "closed":
                 console.log(`[stream] connection state changed to: ${iceConnectionState}`);
