@@ -43,9 +43,9 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
 
   return (
     msiAdminPending && (
-      <div className="modal" oncreate={() => setModalTimeout(setMsiAdminPending)} onremove={(element, done) => clearModalTimeout(done)} >
-        <div className="modal--background" />
-        <div className="modal--content">
+      <div class="modal" oncreate={() => setModalTimeout(setMsiAdminPending)} onremove={(element, done) => clearModalTimeout(done)} >
+        <div class="modal--background" />
+        <div class="modal--content">
           <div class="admin-box">
             <h2>
               Login for <bold>Administrators</bold> only
@@ -73,7 +73,7 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
           <Numpad onKeyClick={onKeyClick} onKeyClear={onKeyClear} />
         </div>
         <span
-          className="modal--close"
+          class="modal--close"
           ontouchstart={() => setMsiAdminPending(!msiAdminPending)}
           role="button"
           tabIndex={0}

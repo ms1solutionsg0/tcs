@@ -14,6 +14,7 @@ $button-color: orangered;
     @include user-select;
 
     &__key {
+        transition: all .2s;
 
         &,
         &:link,
