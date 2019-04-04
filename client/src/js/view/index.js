@@ -12,6 +12,9 @@ import AdminModal from "./components/AdminModal";
 
 const ADMIN_TIMEOUT_TIME = 150000; // 2.5 minutes
 let ADMIN_TIMEOUT;
+// const STREAM_REFRESH_TIME = 900000; // 15 minutes
+const STREAM_REFRESH_TIME = 60000; // 1 minute TODO
+
 
 const view = (state, actions) => {
   const setAdminTimeout = () => {
@@ -21,6 +24,10 @@ const view = (state, actions) => {
   const clearAdminTimeout = () => {
     clearTimeout(ADMIN_TIMEOUT);
   }
+
+  const setStreamRefreshInterval = () => {
+    setInterval(() => actions.setMsiStreamRefreshPending && actions.stream.close(), STREAM_REFRESH_TIME);
+  };
 
   const toFullScreen = (element = document.documentElement) => {
     const isFullscreen =
@@ -42,9 +49,13 @@ const view = (state, actions) => {
   };
 
   return (
-    <main>
+    <main oncreate={() => setStreamRefreshInterval()}>
       {
         Object.onload = toFullScreen()
+      }
+      {
+        state.msiStreamRefreshPending &&
+        <div class="refresh-stream">Neal</div>
       }
       <section>
         <AdminModal
