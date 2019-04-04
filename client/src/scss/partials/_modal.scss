@@ -12,6 +12,11 @@
     animation: fade-fast 1s;
     z-index: 920;
 
+    &--no-animation {
+        animation: none !important;
+        transition: none;
+    }
+
     &--content {
         font-size: 1.5rem;
         text-align: center;

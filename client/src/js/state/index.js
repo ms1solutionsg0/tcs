@@ -8,6 +8,7 @@ const state = {
 
     msiAdmin: false,
     msiAdminPending: false,
+    msiShutdownPending: false,
     showSplashScreen: true,
     mode: 'drive',
     manipulator: {

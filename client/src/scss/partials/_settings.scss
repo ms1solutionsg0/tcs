@@ -61,4 +61,12 @@
 	&-hide {
 		display: none;
 	}
+
+	&-general__button {
+		z-index: 1000;
+		transition: none;
+		&--large-margin {
+			margin-right: 4rem;
+		}
+	}
 }
