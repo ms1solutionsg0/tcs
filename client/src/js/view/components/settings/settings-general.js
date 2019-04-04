@@ -8,9 +8,8 @@ export const SettingsGeneral = ({ state, actions }) =>
                 <div class="modal--background" />
                 <div class="modal--content">
                     <div class="admin-box">
-                        <h2>
-                            <bold>Turtle Rover Shutdown Confirmation</bold>
-                        </h2>
+                        <h2><bold>Turtle Rover Shutdown Confirmation</bold></h2>
+                        <p><bold>Please manually turn off the rover</bold></p>
                         <button type="button"
                             id="login-btn"
                             class="settings-general__button settings-general__button--large-margin"
