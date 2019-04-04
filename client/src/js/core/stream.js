@@ -11,9 +11,15 @@ export const Stream = function () {
     this.remoteDesc = false;
 
     this.iceCandidates = [];
+
+    this.noReconnect = false;
 };
 
 Stream.prototype.start = function() {
+    if (this.noReconnect) {
+        return;
+    }
+
     console.log('[stream] Starting on:', this.url);
 
     this.websocket = new WebSocket(this.url);
@@ -57,6 +63,8 @@ Stream.prototype.createPeerConnection = function() {
     this.peerConnection.oniceconnectionstatechange = (evt) => {
         const { iceConnectionState } = this.peerConnection;
         switch(iceConnectionState) {
+            case "connected":
+                break;
             case "failed":
             case "closed":
                 console.log(`[stream] connection state changed to: ${iceConnectionState}`);
@@ -217,4 +225,12 @@ Stream.prototype.stop = function() {
         this.websocket = null;
     }
     console.info('[stream] Stop.')
+}
+
+Stream.prototype.preventReconnect = function() {
+    this.noReconnect = true;
+}
+
+Stream.prototype.allowReconnect = function() {
+    this.noReconnect = false;
 }

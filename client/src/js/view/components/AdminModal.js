@@ -56,7 +56,7 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
                 type="button"
                 class="admin-box__register-form--button"
                 id="login-btn"
-                onclick={() =>
+                ontouchstart={() =>
                   onClickAdmin(
                     msiAdmin,
                     setMsiAdmin,
@@ -74,7 +74,7 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
         </div>
         <span
           className="modal--close"
-          onclick={() => setMsiAdminPending(!msiAdminPending)}
+          ontouchstart={() => setMsiAdminPending(!msiAdminPending)}
           role="button"
           tabIndex={0}
         >

@@ -17,7 +17,7 @@ const FRONT_LEFT_INDEX = 1;
 const BACK_LEFT_INDEX = 2;
 const BACK_RIGHT_INDEX = 3;
 
-const slowK = 0.5;
+const verySlowK = 0.3;
 const k = 1.05;
 
 Frame.prototype.motor = function(value) {
@@ -35,23 +35,25 @@ Frame.prototype.motors = function (speed, directions, directionList) {
     this.motorsArr.forEach((motor, index) => {
         if (stringDirections === stringDirectionLeft) {
             if (index === BACK_LEFT_INDEX) {
-                return (this.motorsArr[index] = directions[index] << 7);
+                return (this.motorsArr[index] =
+                    Math.abs(speed * verySlowK) | (directions[index] << 7));
             }
 
             if (index === FRONT_LEFT_INDEX) {
                 return (this.motorsArr[index] =
-                    Math.abs(speed * slowK) | (directions[index] << 7));
+                    Math.abs(speed * verySlowK) | (directions[index] << 7));
             }
         }
 
         if (stringDirections === stringDirectionRight) {
             if (index === BACK_RIGHT_INDEX) {
-                return (this.motorsArr[index] = directions[index] << 7);
+                return (this.motorsArr[index] =
+                    Math.abs(speed * verySlowK) | (directions[index] << 7));
             }
 
             if (index === FRONT_RIGHT_INDEX) {
                 return (this.motorsArr[index] =
-                    Math.abs(speed * slowK) | (directions[index] << 7));
+                    Math.abs(speed * verySlowK) | (directions[index] << 7));
             }
         }
 

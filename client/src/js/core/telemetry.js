@@ -11,5 +11,5 @@ export const telemetry = function telemetry(actions, sockets) {
         if (sockets.io.connected) {
             sockets.io.emit('telemetry');
         }
-    }, 2000);
+    }, 10000);
 };

@@ -1,14 +1,11 @@
 import { h } from 'hyperapp';
 
-export const TopBar = ({ msiAdmin, state, switchSettings, toFullScreen, cancelFullScreen }) =>
+export const TopBar = ({ msiAdmin, state, switchSettings }) =>
     <section id="topbar" class="topbar">
         <img alt="" class="topbar_logo" src={require('../../../img/ui/turtle-logo.svg')} />
         <div class="topbar_indicators">
             <IndicatorBattery batteryLevel={state.batteryLevel} />
             {msiAdmin && <IndicatorSignal signalLevel={state.signalLevel} />}
-        </div>
-        <div id="topbar_actions" class="topbar_actions">
-            {msiAdmin && <ActionFullscreen toFullScreen={toFullScreen} cancelFullScreen={cancelFullScreen} />}
         </div>
         {
             msiAdmin &&
@@ -51,24 +48,4 @@ const signalLevelIcon = (signalLevel) => {
     } else {
         return require('../../../img/ui/signal-0.svg');
     }
-};
-
-const ActionFullscreen = ({ toFullScreen, cancelFullScreen }) =>
-    <img
-        alt=""
-        class="topbar_actions_action"
-        id="button-fullscreen"
-        src={require('../../../img/ui/nav-bar-fullscreen.svg')}
-        onmouseup={(event) => toggleFullscreen(event, toFullScreen, cancelFullScreen)}
-    />;
-
-
-// https://gist.github.com/demonixis/5188326
-const toggleFullscreen = (event, toFullScreen, cancelFullScreen) => {
-    let element = document.documentElement;
-    if (event instanceof window.HTMLElement) {
-        element = event;
-    }
-
-    toFullScreen(element) || cancelFullScreen();
 };
