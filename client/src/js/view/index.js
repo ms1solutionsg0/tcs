@@ -26,7 +26,7 @@ const view = (state, actions) => {
   }
 
   const setStreamRefreshInterval = () => {
-    setInterval(() => actions.setMsiStreamRefreshPending && actions.stream.close(), STREAM_REFRESH_TIME);
+    setInterval(() => actions.stream.close(), STREAM_REFRESH_TIME);
   };
 
   const toFullScreen = (element = document.documentElement) => {
