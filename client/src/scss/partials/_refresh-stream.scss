@@ -1,9 +1,25 @@
 .refresh-stream {
-    background-image: url("../img/hud/NASA-MARS.jpg");
-    background-size: cover;
     position: fixed;
     height: 100vh;
     width: 100vw;
-    animation: fade-fast 1s;
-    z-index: 999999;
+    transition: all .2s;
+    z-index: 99990;
+    background-color: rgba(black, 0.75);
+    animation: moveInBottom 1s;
+
+    &--message {
+        @include absCenter;
+        font-size: 5rem;
+        text-transform: uppercase;
+        font-weight: bold;
+        text-align: center;
+        display: inline-block;
+        letter-spacing: 0.2rem;
+        color: $green;
+    }
+
+    &--remove {
+        animation: fadeOut 1s;
+    }
 }
+

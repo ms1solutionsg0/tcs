@@ -9,7 +9,7 @@ export const TopBar = ({ msiAdmin, state, switchSettings }) =>
         </div>
         {
             msiAdmin &&
-            <div role="button" class="topbar_menu" onmousedown={() => switchSettings()}>
+            <div role="button" class="topbar_menu" ontouchstart={() => switchSettings()}>
                 <div class="topbar_menu_bar" />
             </div>
         }

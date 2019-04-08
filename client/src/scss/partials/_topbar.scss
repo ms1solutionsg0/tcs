@@ -4,7 +4,7 @@
     top: 0;
     width: 100%;
     background-color: $background-color;
-    z-index: 9;
+    z-index: 99995;
     @include user-select;
     @include small {
         height: $topbar-height-small;

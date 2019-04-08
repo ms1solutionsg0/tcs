@@ -15,6 +15,7 @@ export const Stream = function (actions) {
     this.noReconnect = false;
 
     this.actions = actions;
+    this.timeout = null;
 };
 
 Stream.prototype.start = function() {
@@ -66,14 +67,11 @@ Stream.prototype.createPeerConnection = function() {
         const { iceConnectionState } = this.peerConnection;
         switch(iceConnectionState) {
             case "connected":
-                console.log('NEAL: before setMSISTREAM...actions:', this.actions);
                 this.actions.setMsiStreamRefreshPending(false);
-                console.log('NEAL: after setMSISTREAM');
                 break;
             case "failed":
             case "closed":
                 console.log(`[stream] connection state changed to: ${iceConnectionState}`);
-                this.actions.setMsiStreamRefreshPending(true);
                 this.reconnect();
             default:
                 break;
@@ -82,8 +80,9 @@ Stream.prototype.createPeerConnection = function() {
 }
 
 Stream.prototype.reconnect = function() {
+    clearTimeout(this.timeout);
     this.stop();
-    setTimeout(this.start.bind(this), 5000);
+    this.timeout = setTimeout(this.start.bind(this), 5000);
 }
 
 Stream.prototype.offer = function() {
