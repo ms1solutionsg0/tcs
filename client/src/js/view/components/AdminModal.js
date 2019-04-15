@@ -22,7 +22,8 @@ const setModalTimeout = (setMsiAdminPending) => {
 const clearModalTimeout = (element, done) => {
   clearTimeout(TIMEOUT);
   if (element) {
-    element.className = element.className + " modal--remove";
+    // element.className = element.className + " modal--remove";
+    element.classList.remove("modal--remove");
   }
 
   done && setTimeout(() => done(), 500);
@@ -77,7 +78,7 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
           <Numpad onKeyClick={onKeyClick} onKeyClear={onKeyClear} />
         </div>
         <span
-          class="modal--close" 
+          class="modal--close"
           ontouchstart={() => setMsiAdminPending(!msiAdminPending)}
           role="button"
           tabIndex={0}

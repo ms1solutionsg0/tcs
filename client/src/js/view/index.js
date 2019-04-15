@@ -18,7 +18,8 @@ const STREAM_REFRESH_TIME = 900000; // 15 minutes
 const view = (state, actions) => {
 
   const onRefreshStreamRemove = (element, done) => {
-    element.className = element.className + " refresh-stream--remove";
+    // element.className = element.className + " refresh-stream--remove";
+    element.classList.add("refresh-stream--remove");
     done && setTimeout(() => done(), 1000);
   }
 
@@ -31,7 +32,7 @@ const view = (state, actions) => {
   }
 
   const setStreamRefreshInterval = () => {
-    setInterval(() => actions.setMsiStreamRefreshPending(true) && actions.stream.close(), STREAM_REFRESH_TIME);
+    setInterval(() => { actions.setMsiStreamRefreshPending(true); actions.stream.close(); }, STREAM_REFRESH_TIME);
   };
 
   const toFullScreen = (element = document.documentElement) => {
