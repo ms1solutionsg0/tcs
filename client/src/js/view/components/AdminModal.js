@@ -23,7 +23,7 @@ const clearModalTimeout = (element, done) => {
   clearTimeout(TIMEOUT);
   if (element) {
     // element.className = element.className + " modal--remove";
-    element.classList.remove("modal--remove");
+    element.classList.add("modal--remove");
   }
 
   done && setTimeout(() => done(), 500);
