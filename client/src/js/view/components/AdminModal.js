@@ -22,7 +22,6 @@ const setModalTimeout = (setMsiAdminPending) => {
 const clearModalTimeout = (element, done) => {
   clearTimeout(TIMEOUT);
   if (element) {
-    // element.className = element.className + " modal--remove";
     element.classList.add("modal--remove");
   }
 

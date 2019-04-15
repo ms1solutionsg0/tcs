@@ -18,7 +18,6 @@ const STREAM_REFRESH_TIME = 900000; // 15 minutes
 const view = (state, actions) => {
 
   const onRefreshStreamRemove = (element, done) => {
-    // element.className = element.className + " refresh-stream--remove";
     element.classList.add("refresh-stream--remove");
     done && setTimeout(() => done(), 1000);
   }
