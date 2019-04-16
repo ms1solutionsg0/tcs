@@ -1,4 +1,4 @@
-export const Stream = function () {
+export const Stream = function (actions) {
     this.protocol = location.protocol === "https:" ? "wss:" : "ws:";
     this.hostname = document.location.hostname;
     this.port = 8090;
@@ -13,6 +13,9 @@ export const Stream = function () {
     this.iceCandidates = [];
 
     this.noReconnect = false;
+
+    this.actions = actions;
+    this.timeout = null;
 };
 
 Stream.prototype.start = function() {
@@ -64,6 +67,7 @@ Stream.prototype.createPeerConnection = function() {
         const { iceConnectionState } = this.peerConnection;
         switch(iceConnectionState) {
             case "connected":
+                this.actions.setMsiStreamRefreshPending(false);
                 break;
             case "failed":
             case "closed":
@@ -76,8 +80,9 @@ Stream.prototype.createPeerConnection = function() {
 }
 
 Stream.prototype.reconnect = function() {
+    clearTimeout(this.timeout);
     this.stop();
-    setTimeout(this.start.bind(this), 5000);
+    this.timeout = setTimeout(this.start.bind(this), 5000);
 }
 
 Stream.prototype.offer = function() {

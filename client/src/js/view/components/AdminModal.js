@@ -19,9 +19,13 @@ const setModalTimeout = (setMsiAdminPending) => {
   TIMEOUT = setTimeout(() => setMsiAdminPending(false), MODAL_TIMEOUT);
 };
 
-const clearModalTimeout = (done) => {
+const clearModalTimeout = (element, done) => {
   clearTimeout(TIMEOUT);
-  done && done();
+  if (element) {
+    element.classList.add("modal--remove");
+  }
+
+  done && setTimeout(() => done(), 500);
 };
 
 const resetModalTimeout = (setMsiAdminPending) => {
@@ -43,7 +47,7 @@ export default function AdminModal({ msiAdminPending, setMsiAdminPending, msiAdm
 
   return (
     msiAdminPending && (
-      <div class="modal" oncreate={() => setModalTimeout(setMsiAdminPending)} onremove={(element, done) => clearModalTimeout(done)} >
+      <div class="modal" oncreate={() => setModalTimeout(setMsiAdminPending)} onremove={(element, done) => clearModalTimeout(element, done)} >
         <div class="modal--background" />
         <div class="modal--content">
           <div class="admin-box">

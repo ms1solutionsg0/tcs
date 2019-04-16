@@ -41,14 +41,8 @@
         z-index: 925;
         color: white;
     }
-}
 
-@keyframes fade-fast {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
+    &--remove {
+        animation: fadeOut .5s;
     }
 }

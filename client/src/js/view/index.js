@@ -12,8 +12,16 @@ import AdminModal from "./components/AdminModal";
 
 const ADMIN_TIMEOUT_TIME = 150000; // 2.5 minutes
 let ADMIN_TIMEOUT;
+const STREAM_REFRESH_TIME = 900000; // 15 minutes
+
 
 const view = (state, actions) => {
+
+  const onRefreshStreamRemove = (element, done) => {
+    element.classList.add("refresh-stream--remove");
+    done && setTimeout(() => done(), 1000);
+  }
+
   const setAdminTimeout = () => {
     ADMIN_TIMEOUT = setTimeout(() => actions.setMsiAdmin(false), ADMIN_TIMEOUT_TIME);
   };
@@ -21,6 +29,10 @@ const view = (state, actions) => {
   const clearAdminTimeout = () => {
     clearTimeout(ADMIN_TIMEOUT);
   }
+
+  const setStreamRefreshInterval = () => {
+    setInterval(() => { actions.setMsiStreamRefreshPending(true); actions.stream.close(); }, STREAM_REFRESH_TIME);
+  };
 
   const toFullScreen = (element = document.documentElement) => {
     const isFullscreen =
@@ -42,7 +54,7 @@ const view = (state, actions) => {
   };
 
   return (
-    <main>
+    <main oncreate={() => setStreamRefreshInterval()}>
       {
         Object.onload = toFullScreen()
       }
@@ -65,6 +77,14 @@ const view = (state, actions) => {
           setMsiAdminPending={actions.setMsiAdminPending}
           clearAdminTimeout={clearAdminTimeout}
         />
+        <section>
+          {
+            state.msiStreamRefreshPending &&
+            <div class="refresh-stream" onremove={(element, done) => onRefreshStreamRemove(element, done)}>
+              <h2 class="refresh-stream--message">{"Interference from Mars!\nRetrieving Connection "}&#9732;</h2>
+            </div>
+          }
+        </section>
         <TopBar
           msiAdmin={state.msiAdmin}
           state={state.telemetry}

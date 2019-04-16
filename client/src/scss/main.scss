@@ -5,6 +5,7 @@
 @import "helpers/lato-font";
 @import "helpers/normalize";
 @import "helpers/size";
+@import "helpers/_animations";
 
 // PARTIALS
 @import "partials/body";
@@ -22,6 +23,7 @@
 @import "partials/admin-page";
 @import "partials/modal";
 @import "partials/numpad";
+@import "partials/_refresh-stream";
 
 // ELEMENTS
 @import "elements/button";

@@ -23,6 +23,7 @@ const actions = {
     setMsiAdmin: value => state => ({ msiAdmin: value }),
     setMsiAdminPending: value => state => ({ msiAdminPending: value }),
     setMsiShutdownPending: value => state => ({ msiShutdownPending: value }),
+    setMsiStreamRefreshPending: value => state => ({ msiStreamRefreshPending: value }),
     setSplashScreenState: value => state => ({ showSplashScreen: value }),
     setMode: value => state => save('', { mode: value }),
 

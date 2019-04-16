@@ -119,3 +119,6 @@ venv.bak/
 .mypy_cache/
 
 *.deb
+
+# MAC
+.DS_Store

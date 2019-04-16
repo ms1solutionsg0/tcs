@@ -12,7 +12,7 @@ const core = (actions) => {
     const sockets = new Sockets(actions);
     actions.motors = new Motors(sockets);
 
-    actions.stream = new Stream();
+    actions.stream = new Stream(actions);
     window.onbeforeunload = () => actions.stream.stop();
     window.addEventListener('online', () => {
         actions.stream.allowReconnect();
