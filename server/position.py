@@ -1,13 +1,14 @@
-from Adafruit_BNO055 import BNO055
-import time
+import board
+import busio
+import adafruit_bno055
 import json
+import asyncio
 
-def log_position(self):
-    bno = BNO055.BNO055(serial_port='/dev/ttyAMA0', rst=12)
-    if not bno.begin():
-        raise RuntimeError('Failed to initialize BNO055')
+async def log_position():
+    i2c = busio.I2C(board.SCL, board.SDA)
+    sensor = adafruit_bno055.BNO055(i2c)
 
     with open('log.txt', 'w') as f:
         while True:
-            json.dump({ "Euler": sensor.euler, "Quaternion": sensor.quaternion }, f, separators=(',', ':'), indent=4)
+            json.dump({ "Euler": sensor.euler, "Quaternion": sensor.quaternion }, f, separators=(',', ':'), indent=4 )
             await asyncio.sleep(0.25)
