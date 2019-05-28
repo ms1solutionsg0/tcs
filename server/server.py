@@ -20,7 +20,6 @@ def start_server():
         ws_server = WSserver(http_server.app)
         ws_server.start()
         http_server.start()
-        log_position()
     except OSError as e:
         logger.error(e)
 
