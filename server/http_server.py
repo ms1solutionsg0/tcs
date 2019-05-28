@@ -29,7 +29,6 @@ class HTTPserver(metaclass=Singleton):
             await app[name]
 
     async def create_app(self):
-        self.app = web.Application()
         self.app.router.add_get('/', self.index)
         self.app.router.add_static('/', self.PROJECT_DIR+'/client/dist', show_index=True)
         return self.app
