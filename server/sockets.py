@@ -6,6 +6,7 @@ from log import logname
 from firmware import Shield
 from system import System
 from version import version_info
+from position import log_position
 
 logger = logname("sockets")
 
@@ -56,13 +57,17 @@ class WSnamespace(socketio.AsyncNamespace):
     async def on_reboot(self, sid):
         self.system.reboot()
 
+    async def prevent_flip(self):
+        await log_position()
+
 
 class WSserver():
-    def __init__(self, app):
+    def __init__(self, HTTPServer):
         super().__init__()
         self.sio = None
-        self.app = app
         self.namespace = WSnamespace('/sockets')
+        HTTPServer.add_background_task(("flip", self.namespace.prevent_flip))
+        self.app = HTTPServer.app
     
     def start(self):
         self.sio = socketio.AsyncServer(async_mode='aiohttp')
