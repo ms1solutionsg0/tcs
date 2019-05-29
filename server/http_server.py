@@ -21,7 +21,7 @@ class HTTPserver(metaclass=Singleton):
 
     async def start_background_tasks(self, app):
         for (name, task) in self.tasks:
-            app[name] =app.loop.create_task(task())
+            app[name] = app.loop.create_task(task())
     
     async def cleanup_background_tasks(self, app):
         for (name, task) in self.tasks:
