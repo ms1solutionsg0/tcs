@@ -31,6 +31,10 @@ Motors.prototype.stop = function() {
 };
 
 Motors.prototype.set = function (speed, directions) {
+    if (this.sockets.getPreventFlip()) {
+        this.stop();
+        return;
+    }
     if (this.sockets.io.connected) {
         const frame = this.frame.motors(speed, directions, this.direction);
         console.log(helper.arrayToHex(this.frame.motorsArr));
