@@ -44,6 +44,8 @@ class Position():
                 else:
                     self.prevent_flip_backward = False
                     self.prevent_flip_forward = False
+                    json.dump({ "Euler": sensor.euler, "Direction": "backward" }, f, separators=(',', ':'), indent=4 )
+                    await self.ws_server.namespace.set_flip_state('normal')
                 
                 await asyncio.sleep(.25)
                 
