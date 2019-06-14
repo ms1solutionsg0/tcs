@@ -6,7 +6,6 @@ from log import logname
 from firmware import Shield
 from system import System
 from version import version_info
-from position import log_position
 
 logger = logname("sockets")
 

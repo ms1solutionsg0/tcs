@@ -17,7 +17,7 @@ def start_server():
         from http_server import HTTPserver
 
         http_server = HTTPserver()
-        ws_server = WSserver(http_server)
+        ws_server = WSserver(http_server.app)
         position = Position(ws_server, http_server)
         ws_server.start()
         http_server.start()

@@ -5,18 +5,10 @@ import json
 import asyncio
 from firmware import Shield
 
-Euler_theta = 265
-Euler_backward = 10
-Euler_forward = -1
+from datetime import datetime
 
-async def log_position():
-    i2c = busio.I2C(board.SCL, board.SDA)
-    sensor = adafruit_bno055.BNO055(i2c)
-
-    with open('log.txt', 'w') as f:
-        while True:
-            json.dump({ "Euler": sensor.euler, "Quaternion": sensor.quaternion }, f, separators=(',', ':'), indent=4 )
-            await asyncio.sleep(0.25)
+Euler_theta = 230
+Euler_forward = 1
 
 class Position():
     def __init__(self, ws_server, http_server):
@@ -33,18 +25,20 @@ class Position():
         with open('log.txt', 'w') as f:
             while True:
                 if (sensor.euler[0] > Euler_theta):
-                    if (self.prevent_flip_forward == False and Euler_backward > sensor.euler[1]):
-                        json.dump({ "Euler": sensor.euler, "Direction": "forward" }, f, separators=(',', ':'), indent=4 )
+                    if (self.prevent_flip_forward == False and Euler_forward > sensor.euler[1]):
+                        json.dump({ "Euler": sensor.euler, "Direction": "forward", "Time": datetime.now() }, f, separators=(',', ':'), indent=4 )
                         self.prevent_flip_forward = True
                         await self.ws_server.namespace.set_flip_state('forward')
                     elif (self.prevent_flip_backward == False and Euler_forward < sensor.euler[1]):
-                        json.dump({ "Euler": sensor.euler, "Direction": "backward" }, f, separators=(',', ':'), indent=4 )
+                        json.dump({ "Euler": sensor.euler, "Direction": "backward", "Time": datetime.now() }, f, separators=(',', ':'), indent=4 )
                         self.prevent_flip_backward = True
                         await self.ws_server.namespace.set_flip_state('backward')
-                else:
+                    else:
+                        json.dump({ "Euler": sensor.euler, "Direction": "idk sensor went off", "Time": datetime.now() }, f, separators=(',', ':'), indent=4 )
+                elif (self.prevent_flip_forward == True or self.prevent_flip_backward == True):
+                    json.dump({ "Euler": sensor.euler, "Direction": "normal in elif", "Time": datetime.now() }, f, separators=(',', ':'), indent=4 )
                     self.prevent_flip_backward = False
                     self.prevent_flip_forward = False
-                    json.dump({ "Euler": sensor.euler, "Direction": "backward" }, f, separators=(',', ':'), indent=4 )
                     await self.ws_server.namespace.set_flip_state('normal')
                 
                 await asyncio.sleep(.25)

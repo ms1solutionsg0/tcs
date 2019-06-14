@@ -17,19 +17,23 @@ export const Sockets = function Sockets(actions) {
         const { type, value } = msg;
 
         if (type === "preventFlip" && value === "forward") {
+            console.log("NEAL: inside preventFlip forward");
             actions.preventFlipForward(true);
             const stopArray = new ArrayBuffer(4);
             this.sendMotors(stopArray);
             this.preventFlipForward = true;
         } else if (type === "preventFlip" && value === "backward") {
+            console.log("NEAL: inside preventFlip backward");
             actions.preventFlipBackward(true);
             const stopArray = new ArrayBuffer(4);
             this.sendMotors(stopArray);
             this.preventFlipBackward = true;
         } else if (this.preventFlipForward) {
+            console.log("NEAL: clear preventFlipForward");
             actions.preventFlipForward(false);
             this.preventFlipForward = false;
         } else if (this.preventFlipBackward) {
+            console.log("NEAL: clear preventFlipBackward");
             actions.preventFlipBackward(false);
             this.preventFlipBackward = false;
         }

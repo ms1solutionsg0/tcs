@@ -15,3 +15,6 @@ The client controls the UI as well as the server interfacing with the controls. 
 ### Clean
 Run the commands in the readme for creating a .deb package.
 Haven't gotten this to run correctly
+
+### Sensor
+- Sensor should be near the right front (near the USB ports) when installing the bottom portion of the Turtle Bot.

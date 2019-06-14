@@ -23,12 +23,15 @@ const view = (state, actions) => {
   }
 
   const onPreventFlipRemove = (element, done) => {
-    clearInterval(PREVENT_FLIP_INTERVAL);
+    // clearInterval(PREVENT_FLIP_INTERVAL);
+    // NEAL TODO
     element.classList.add("modal-stream--remove__preventFlip");
     done && setTimeout(() => done(), 1000);
   }
 
   const setPreventFlipInterval = (element) => {
+    return;
+    // NEAL TODO
     clearInterval(PREVENT_FLIP_INTERVAL);
     PREVENT_FLIP_INTERVAL = setInterval(() => element.classList.toggle("modal-stream--remove__preventFlip"), 3000);
   }
