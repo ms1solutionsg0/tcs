@@ -1,7 +1,8 @@
 import io from 'socket.io-client';
 
 export const Sockets = function Sockets(actions) {
-    this.preventFlip = false;
+    this.preventFlipForward = false;
+    this.preventFlipBackward = false;
     this.io = io.connect('http://' + document.domain + '/sockets', {
         transports: ['websocket'],
     });
@@ -13,12 +14,26 @@ export const Sockets = function Sockets(actions) {
     });
     this.io.on('response', (msg) => {
         console.info('[sockets] Response:', msg);
-        if (msg.type && msg.type === "preventFlip") {
-            actions.preventFlip(msg.value);
+        const { type, value } = msg;
+
+        if (type === "preventFlip" && value === "forward") {
+            actions.preventFlipForward(true);
             const stopArray = new ArrayBuffer(4);
             this.sendMotors(stopArray);
-            this.preventFlip = msg.value;
+            this.preventFlipForward = true;
+        } else if (type === "preventFlip" && value === "backward") {
+            actions.preventFlipBackward(true);
+            const stopArray = new ArrayBuffer(4);
+            this.sendMotors(stopArray);
+            this.preventFlipBackward = true;
+        } else if (this.preventFlipForward) {
+            actions.preventFlipForward(false);
+            this.preventFlipForward = false;
+        } else if (this.preventFlipBackward) {
+            actions.preventFlipBackward(false);
+            this.preventFlipBackward = false;
         }
+        
     });
 };
 
@@ -34,6 +49,10 @@ Sockets.prototype.sendGripper = function sendGripper(data) {
     this.io.emit('gripper', data);
 };
 
-Sockets.prototype.getPreventFlip = function getPreventFlip() {
-    return this.preventFlip;
+Sockets.prototype.getPreventFlipForward = function getPreventFlipForward() {
+    return this.preventFlipForward;
+}
+
+Sockets.prototype.getPreventFlipBackward = function getPreventFlipBackward() {
+    return this.preventFlipBackward;
 }

@@ -1,6 +1,6 @@
 import { h } from "hyperapp";
 
-import { SplashScreen } from "./splashscreen";
+// import { SplashScreen } from "./splashscreen";
 import { TopBar } from "./components/topbar";
 import { Stream } from "./components/stream";
 import { Settings } from "./components/settings";
@@ -12,6 +12,7 @@ import AdminModal from "./components/AdminModal";
 const ADMIN_TIMEOUT_TIME = 150000; // 2.5 minutes
 let ADMIN_TIMEOUT;
 const STREAM_REFRESH_TIME = 900000; // 15 minutes
+let PREVENT_FLIP_INTERVAL;
 
 
 const view = (state, actions) => {
@@ -22,8 +23,14 @@ const view = (state, actions) => {
   }
 
   const onPreventFlipRemove = (element, done) => {
+    clearInterval(PREVENT_FLIP_INTERVAL);
     element.classList.add("modal-stream--remove__preventFlip");
     done && setTimeout(() => done(), 1000);
+  }
+
+  const setPreventFlipInterval = (element) => {
+    clearInterval(PREVENT_FLIP_INTERVAL);
+    PREVENT_FLIP_INTERVAL = setInterval(() => element.classList.toggle("modal-stream--remove__preventFlip"), 3000);
   }
 
   const setAdminTimeout = () => {
@@ -86,9 +93,17 @@ const view = (state, actions) => {
         </section>
         <section>
           {
-            state.preventFlip &&
-            <div class="modal-stream modal-stream--preventFlip" onremove={(element, done) => onPreventFlipRemove(element, done)}>
-              <h2 class="modal-stream--message">{"The Rover Has Been Damaged! Please Move From Nearby Objects! "}&#9888;</h2>
+            state.preventFlipForward &&
+            <div class="modal-stream modal-stream--preventFlip" oncreate={(element) => setPreventFlipInterval(element)} onremove={(element, done) => onPreventFlipRemove(element, done)}>
+              <h2 class="modal-stream--message">{"Rover Malfunction! Please move backwards! "}&#9888;</h2>
+            </div>
+          }
+        </section>
+        <section>
+          {
+            state.preventFlipBackward &&
+            <div class="modal-stream modal-stream--preventFlip" oncreate={(element) => setPreventFlipInterval(element)} onremove={(element, done) => onPreventFlipRemove(element, done)}>
+              <h2 class="modal-stream--message">{"Rover Malfunction! Please move forwards! "}&#9888;</h2>
             </div>
           }
         </section>
