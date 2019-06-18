@@ -1,3 +1,4 @@
+import json
 import serial
 import asyncio
 from firmware import Shield
@@ -23,10 +24,30 @@ class Position():
         ser = serial.Serial('/dev/ttyACM0')
         ser.flushInput()
 
-        with open('data.txt', 'w') as my_data_file:
-            while True:
+        while True:
+            try:
                 ser_bytes = ser.readline().decode("utf-8")
-                my_data_file.write(ser_bytes)
-                await asyncio.sleep(0.35)
+                ser_bytes_dict = json.loads(ser_bytes)
+                x = ser_bytes_dict['x']
+                y = ser_bytes_dict['y']
+                z = ser_bytes_dict['z']
+            except:
+                continue
+            
+            self.previous_direction = self.direction
+            
+            if (x < 40.0) and (z < -60.0):
+                # x = 3.8125 y = -1.8125 z = -82.6875 -- sample data
+                self.direction = Direction.FORWARD
+            elif (x > 305.0) and (z > 30.0):
+                # x = 356.125 y = 5.0625 z = 40.75 -- sample data
+                self.direction = Direction.BACKWARD
+            else:
+                # x = 0.0625 y = 4.5625 z = 37.8125 -- sample data
+                self.direction = Direction.NORMAL
+            
+            if self.direction != self.previous_direction:
+                await self.ws_server.namespace.set_flip_state(self.direction)
+            
+            await asyncio.sleep(0.1)
 
-                
