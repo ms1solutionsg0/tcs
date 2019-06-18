@@ -21,7 +21,7 @@ class Position():
         self.previous_direction = Direction.NORMAL
 
     async def prevent_flip(self):
-        ser = serial.Serial('/dev/ttyACM0')
+        ser = serial.Serial('/dev/ttyUSB0')
         ser.flushInput()
 
         while True:
@@ -36,10 +36,10 @@ class Position():
             
             self.previous_direction = self.direction
             
-            if (x < 40.0) and (z < -60.0):
+            if (x < 50.0) and (z < -50.0):
                 # x = 3.8125 y = -1.8125 z = -82.6875 -- sample data
                 self.direction = Direction.FORWARD
-            elif (x > 305.0) and (z > 30.0):
+            elif (x > 290.0) and (z > 30.0):
                 # x = 356.125 y = 5.0625 z = 40.75 -- sample data
                 self.direction = Direction.BACKWARD
             else:
@@ -47,7 +47,8 @@ class Position():
                 self.direction = Direction.NORMAL
             
             if self.direction != self.previous_direction:
-                await self.ws_server.namespace.set_flip_state(self.direction)
+                print(self.direction)
+                await self.ws_server.namespace.set_flip_state(self.direction.value)
             
             await asyncio.sleep(0.1)
 
