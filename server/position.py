@@ -36,19 +36,15 @@ class Position():
             
             self.previous_direction = self.direction
             
-            if (x < 50.0) and (z < -50.0):
-                # x = 3.8125 y = -1.8125 z = -82.6875 -- sample data
+            if z < -50.0:
                 self.direction = Direction.FORWARD
-            elif (x > 290.0) and (z > 30.0):
-                # x = 356.125 y = 5.0625 z = 40.75 -- sample data
+            elif z > 50.0:
                 self.direction = Direction.BACKWARD
             else:
-                # x = 0.0625 y = 4.5625 z = 37.8125 -- sample data
                 self.direction = Direction.NORMAL
             
             if self.direction != self.previous_direction:
-                print(self.direction)
                 await self.ws_server.namespace.set_flip_state(self.direction.value)
             
-            await asyncio.sleep(0.1)
+            await asyncio.sleep(0.05)
 

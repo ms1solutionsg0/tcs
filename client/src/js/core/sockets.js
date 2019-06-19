@@ -16,21 +16,11 @@ export const Sockets = function Sockets(actions) {
         const { type, value } = msg;
 
         if (type === "preventFlip") {
-            if (value === "forward") {
-                actions.preventFlip(value);
+            actions.preventFlip(value);
+            this.preventFlip = value;
+            if (value === "forward" || value === "backward") {
                 const stopArray = new ArrayBuffer(4);
                 this.sendMotors(stopArray);
-                this.preventFlip = value;
-            }
-            else if (value === "backward") {
-                actions.preventFlip(value);
-                const stopArray = new ArrayBuffer(4);
-                this.sendMotors(stopArray);
-                this.preventFlip = value;
-            }
-            else if (value === "normal") {
-                actions.preventFlip(value);
-                this.preventFlip = value;
             }
         }
     });
