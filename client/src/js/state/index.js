@@ -12,8 +12,7 @@ const state = {
     msiStreamRefreshPending: false,
     showSplashScreen: true,
     mode: 'drive',
-    preventFlipForward: false,
-    preventFlipBackward: false,
+    preventFlip: "normal",
     manipulator: {
         axis1: {
             min: 2800,

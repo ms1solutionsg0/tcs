@@ -31,8 +31,7 @@ Motors.prototype.stop = function() {
 };
 
 Motors.prototype.set = function (speed, directions) {
-    if (this.sockets.getPreventFlipForward() || this.sockets.getPreventFlipBackward()) {
-        console.log('NEAL: inside prevent Flip');
+    if (this.sockets.getPreventFlip() != 'normal') {
         this.stop();
         return;
     }

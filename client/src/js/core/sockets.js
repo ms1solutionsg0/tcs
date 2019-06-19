@@ -1,8 +1,7 @@
 import io from 'socket.io-client';
 
 export const Sockets = function Sockets(actions) {
-    this.preventFlipForward = false;
-    this.preventFlipBackward = false;
+    this.preventFlip = 'normal';
     this.io = io.connect('http://' + document.domain + '/sockets', {
         transports: ['websocket'],
     });
@@ -18,25 +17,22 @@ export const Sockets = function Sockets(actions) {
 
         if (type === "preventFlip") {
             if (value === "forward") {
-                actions.preventFlipForward(true);
+                actions.preventFlip(value);
                 const stopArray = new ArrayBuffer(4);
                 this.sendMotors(stopArray);
-                this.preventFlipForward = true;
+                this.preventFlip = value;
             }
             else if (value === "backward") {
-                actions.preventFlipBackward(true);
+                actions.preventFlip(value);
                 const stopArray = new ArrayBuffer(4);
                 this.sendMotors(stopArray);
-                this.preventFlipBackward = true;
-            } else if (this.preventFlipForward) {
-                actions.preventFlipForward(false);
-                this.preventFlipForward = false;
-            } else if (this.preventFlipBackward) {
-                actions.preventFlipBackward(false);
-                this.preventFlipBackward = false;
+                this.preventFlip = value;
+            }
+            else if (value === "normal") {
+                actions.preventFlip(value);
+                this.preventFlip = value;
             }
         }
-        
     });
 };
 
@@ -52,10 +48,7 @@ Sockets.prototype.sendGripper = function sendGripper(data) {
     this.io.emit('gripper', data);
 };
 
-Sockets.prototype.getPreventFlipForward = function getPreventFlipForward() {
-    return this.preventFlipForward;
+Sockets.prototype.getPreventFlip = function getPreventFlip() {
+    return this.preventFlip;
 }
 
-Sockets.prototype.getPreventFlipBackward = function getPreventFlipBackward() {
-    return this.preventFlipBackward;
-}

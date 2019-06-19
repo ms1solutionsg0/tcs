@@ -22,20 +22,6 @@ const view = (state, actions) => {
     done && setTimeout(() => done(), 1000);
   }
 
-  const onPreventFlipRemove = (element, done) => {
-    // clearInterval(PREVENT_FLIP_INTERVAL);
-    // NEAL TODO
-    element.classList.add("modal-stream--remove__preventFlip");
-    done && setTimeout(() => done(), 1000);
-  }
-
-  const setPreventFlipInterval = (element) => {
-    return;
-    // NEAL TODO
-    clearInterval(PREVENT_FLIP_INTERVAL);
-    PREVENT_FLIP_INTERVAL = setInterval(() => element.classList.toggle("modal-stream--remove__preventFlip"), 3000);
-  }
-
   const setAdminTimeout = () => {
     ADMIN_TIMEOUT = setTimeout(() => actions.setMsiAdmin(false), ADMIN_TIMEOUT_TIME);
   };
@@ -96,17 +82,9 @@ const view = (state, actions) => {
         </section>
         <section>
           {
-            state.preventFlipForward &&
-            <div class="modal-stream modal-stream--preventFlip" oncreate={(element) => setPreventFlipInterval(element)} onremove={(element, done) => onPreventFlipRemove(element, done)}>
-              <h2 class="modal-stream--message">{"Rover Malfunction! Please move backwards! "}&#9888;</h2>
-            </div>
-          }
-        </section>
-        <section>
-          {
-            state.preventFlipBackward &&
-            <div class="modal-stream modal-stream--preventFlip" oncreate={(element) => setPreventFlipInterval(element)} onremove={(element, done) => onPreventFlipRemove(element, done)}>
-              <h2 class="modal-stream--message">{"Rover Malfunction! Please move forwards! "}&#9888;</h2>
+            state.preventFlip !== 'normal' &&
+            <div class="modal-stream modal-stream--preventFlip">
+              <h2 class="modal-stream--message">{"Dangerous Terrain. Changing Directions"}&#9888;</h2>
             </div>
           }
         </section>
