@@ -19,8 +19,10 @@ export const Sockets = function Sockets(actions) {
             actions.preventFlip(value);
             this.preventFlip = value;
             if (value === "forward" || value === "backward") {
-                const stopArray = new ArrayBuffer(4);
-                this.sendMotors(stopArray);
+                // actions.motors.stop();
+                // setTimeout(actions.motors.stop.bind(actions.motors), 1000);
+            } else if (value === "normal") {
+                actions.motors.stop();
             }
         }
     });

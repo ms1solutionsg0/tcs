@@ -14,6 +14,10 @@ export const Motors = function(sockets) {
     };
 };
 
+Motors.prototype.goInterval = function(value) {
+    const direction = value == "forward" ? this.direction.backward : this.direction.forward;
+    this.set(40, direction);
+}
 
 Motors.prototype.stop = function() {
     if (this.sockets.io.connected) {
@@ -31,8 +35,12 @@ Motors.prototype.stop = function() {
 };
 
 Motors.prototype.set = function (speed, directions) {
-    if (this.sockets.getPreventFlip() != 'normal') {
+    const preventFlipDirection = this.sockets.getPreventFlip();
+    if (preventFlipDirection != 'normal') {
         this.stop();
+        const goDirection = preventFlipDirection == "forward" ? this.direction.backward : this.direction.forward;
+        const frame = this.frame.motors(60, directions, goDirection);
+        this.sockets.sendMotors(frame);
         return;
     }
 
