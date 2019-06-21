@@ -19,9 +19,9 @@ export const Sockets = function Sockets(actions) {
             actions.preventFlip(value);
             this.preventFlip = value;
             if (value === "forward" || value === "backward") {
-                // actions.motors.stop();
-                // setTimeout(actions.motors.stop.bind(actions.motors), 1000);
-            } else if (value === "normal") {
+                actions.motors.stop();
+                setTimeout(() => actions.motors.set(60, value), 500);
+            } else {
                 actions.motors.stop();
             }
         }

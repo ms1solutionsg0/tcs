@@ -8,6 +8,8 @@ from log import logname
 import time
 logger = logname()
 
+import os
+
 class Direction(Enum):
     FORWARD = 'forward'
     BACKWARD = 'backward'
@@ -21,10 +23,20 @@ class Position():
         self.previous_direction = Direction.NORMAL
 
     async def prevent_flip(self):
-        ser = serial.Serial('/dev/ttyUSB0')
+        await asyncio.sleep(2)
+        ser = serial.Serial(port='/dev/ttyUSB0', timeout=10)
         ser.flushInput()
+        ttyusb0=os.path.exists('/dev/ttyUSB0')
+        if ttyusb0==True:
+            logger.info("Arduino Serial Port Connected")
+        else:
+            logger.error("NOTHING in /dev/ttyUSB0")
 
         while True:
+            ttyusb0=os.path.exists('/dev/ttyUSB0')
+            if ttyusb0==False:
+                logger.error("NOTHING in /dev/ttyUSB0")
+                
             try:
                 ser_bytes = ser.readline().decode("utf-8")
                 ser_bytes_dict = json.loads(ser_bytes)
@@ -36,9 +48,9 @@ class Position():
             
             self.previous_direction = self.direction
             
-            if z < -50.0:
+            if z < -45.0:
                 self.direction = Direction.FORWARD
-            elif z > 50.0:
+            elif z > 45.0:
                 self.direction = Direction.BACKWARD
             else:
                 self.direction = Direction.NORMAL

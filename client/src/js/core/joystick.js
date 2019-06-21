@@ -1,7 +1,7 @@
 import nipplejs from 'nipplejs';
 import { throttle } from 'lodash';
 
-export const joystick = function joystick({ el, motors }) {
+export const joystick = function joystick({ el, motors, preventFlip }) {
     const manager = nipplejs.create({
         zone: el,
         mode: 'static',

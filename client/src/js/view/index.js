@@ -12,8 +12,6 @@ import AdminModal from "./components/AdminModal";
 const ADMIN_TIMEOUT_TIME = 150000; // 2.5 minutes
 let ADMIN_TIMEOUT;
 const STREAM_REFRESH_TIME = 900000; // 15 minutes
-let PREVENT_FLIP_INTERVAL;
-
 
 const view = (state, actions) => {
 
@@ -108,6 +106,7 @@ const view = (state, actions) => {
             mode={state.mode}
             joystick={actions.joystick}
             motors={actions.motors}
+            preventFlip={state.preventFlip !== "normal"}
           />
         </div>
         <Stream stream={actions.stream} mode={state.mode} />
