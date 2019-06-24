@@ -26,7 +26,7 @@
         animation: fadeOut 1s;
 
         &__preventFlip {
-            animation: fadeOut .5s;
+            animation: fadeOut .5s !important;
         }
     }
 }

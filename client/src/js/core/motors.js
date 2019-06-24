@@ -31,15 +31,16 @@ Motors.prototype.stop = function() {
 
 Motors.prototype.set = function (speed, directions) {
     const preventFlipDirection = this.sockets.getPreventFlip();
-    if (preventFlipDirection !== 'normal') {
-        this.stop();
-        const goDirection = preventFlipDirection === "forward" ? this.direction.backward : this.direction.forward;
-        const frame = this.frame.motors(60, goDirection, this.direction);
-        this.sockets.sendMotors(frame);
-        return;
-    }
 
     if (this.sockets.io.connected) {
+        if (preventFlipDirection !== 'normal') {
+            // this.stop();
+            const goDirection = preventFlipDirection === "forward" ? this.direction.backward : this.direction.forward;
+            const frame = this.frame.motors(60, goDirection, this.direction);
+            this.sockets.sendMotors(frame);
+            return;
+        }
+
         const frame = this.frame.motors(speed, directions, this.direction);
         console.log(helper.arrayToHex(this.frame.motorsArr));
         this.sockets.sendMotors(frame);

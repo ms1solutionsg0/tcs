@@ -20,6 +20,11 @@ const view = (state, actions) => {
     done && setTimeout(() => done(), 1000);
   }
 
+  const onPreventFlipRemove = (element, done) => {
+    element.classList.add("modal-stream--remove__preventFlip");
+    done && setTimeout(() => done(), 500);
+  }
+
   const setAdminTimeout = () => {
     ADMIN_TIMEOUT = setTimeout(() => actions.setMsiAdmin(false), ADMIN_TIMEOUT_TIME);
   };
@@ -81,7 +86,7 @@ const view = (state, actions) => {
         <section>
           {
             state.preventFlip !== 'normal' &&
-            <div class="modal-stream modal-stream--preventFlip">
+            <div class="modal-stream modal-stream--preventFlip" onremove={(element, done) => onPreventFlipRemove(element, done)}>
               <h2 class="modal-stream--message">{"Dangerous Terrain. Changing Directions"}&#9888;</h2>
             </div>
           }
