@@ -1,7 +1,7 @@
 import nipplejs from 'nipplejs';
 import { throttle } from 'lodash';
 
-export const joystick = function joystick({ el, motors, preventFlip }) {
+export const joystick = function joystick({ el, motors }) {
     const manager = nipplejs.create({
         zone: el,
         mode: 'static',
@@ -17,6 +17,14 @@ export const joystick = function joystick({ el, motors, preventFlip }) {
     manager.on('start', (eventStart, nipple) => {
         // console.log(evt);
         nipple.on('move', (eventMove, data) => throttledGetDataFromJoystick(eventMove, data));
+        
+        nipple.on('end', (evt, dta) => {
+            const preventFlip = motors.getPreventFlip();
+            if (preventFlip !== "normal") {
+                motors.set(60, false);
+            }
+            // motors.set(0, direction);
+        });
 
         interval = setInterval(() => motors.set(speed, direction), 100);
     });

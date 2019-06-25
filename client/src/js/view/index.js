@@ -111,7 +111,6 @@ const view = (state, actions) => {
             mode={state.mode}
             joystick={actions.joystick}
             motors={actions.motors}
-            preventFlip={state.preventFlip !== "normal"}
           />
         </div>
         <Stream stream={actions.stream} mode={state.mode} />

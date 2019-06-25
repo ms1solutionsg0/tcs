@@ -48,3 +48,8 @@ Motors.prototype.set = function (speed, directions) {
         console.log("Connection not opened.");
     }
 }
+
+Motors.prototype.getPreventFlip = function() {
+    const preventFlipDirection = this.sockets.getPreventFlip();
+    return preventFlipDirection;
+}
