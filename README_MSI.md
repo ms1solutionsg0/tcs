@@ -18,3 +18,12 @@ Haven't gotten this to run correctly
 
 ### Sensor
 - Sensor should be near the right front (near the USB ports) when installing the bottom portion of the Turtle Bot.
+#### Pinout
+- _BNO055_ `Vin` connects to the `5V` out on the _Arduino Nano_.
+- _BNO055_ `GND` connects to the `Ground` out on the _Arduino Nano_.
+- _BNO055_ `SCL` connects to the `SCL` pin on the _Arduino Nano_.
+	- The `SCL` pin on the _Arduino Nano_ is known as `A5`.
+- _BNO055_ `SDA` connects to the `SDA` pin on the _Arduino Nano_.
+	- The `SDA` pin on the _Arduino Nano_ is known as `A4`.
+- Reference:
+	- `https://learn.adafruit.com/adafruit-bno055-absolute-orientation-sensor/arduino-code`
