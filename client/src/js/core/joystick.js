@@ -39,6 +39,11 @@ export const joystick = function joystick({ el, motors }) {
     manager.on('end', (eventEnd) => {
         clearInterval(interval);
         console.log('[joystick interval]', interval);
+        const preventFlip = motors.getPreventFlip();
+        if (preventFlip !== "normal") {
+            return;
+        }
+
         speed = 0;
         console.log(eventEnd);
         motors.stop();

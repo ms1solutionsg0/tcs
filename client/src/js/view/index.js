@@ -1,7 +1,6 @@
 import { h } from "hyperapp";
 
-import { Rotate } from "./rotate";
-import { SplashScreen } from "./splashscreen";
+// import { SplashScreen } from "./splashscreen";
 import { TopBar } from "./components/topbar";
 import { Stream } from "./components/stream";
 import { Settings } from "./components/settings";
@@ -14,12 +13,16 @@ const ADMIN_TIMEOUT_TIME = 150000; // 2.5 minutes
 let ADMIN_TIMEOUT;
 const STREAM_REFRESH_TIME = 900000; // 15 minutes
 
-
 const view = (state, actions) => {
 
   const onRefreshStreamRemove = (element, done) => {
-    element.classList.add("refresh-stream--remove");
+    element.classList.add("modal-stream--remove");
     done && setTimeout(() => done(), 1000);
+  }
+
+  const onPreventFlipRemove = (element, done) => {
+    element.classList.add("modal-stream--remove__preventFlip");
+    done && setTimeout(() => done(), 500);
   }
 
   const setAdminTimeout = () => {
@@ -54,10 +57,7 @@ const view = (state, actions) => {
   };
 
   return (
-    <main oncreate={() => setStreamRefreshInterval()}>
-      {
-        Object.onload = toFullScreen()
-      }
+    <main oncreate={() => {setStreamRefreshInterval(); toFullScreen()}}>
       <section>
         <AdminModal
           msiAdminPending={state.msiAdminPending}
@@ -67,8 +67,6 @@ const view = (state, actions) => {
           setAdminTimeout={setAdminTimeout}
         />
       </section>
-      <Rotate />
-      <SplashScreen state={state.showSplashScreen} />
       <div id="wrapper" class="wrapper">
         <TouchHandler
           msiAdmin={state.msiAdmin}
@@ -80,8 +78,16 @@ const view = (state, actions) => {
         <section>
           {
             state.msiStreamRefreshPending &&
-            <div class="refresh-stream" onremove={(element, done) => onRefreshStreamRemove(element, done)}>
-              <h2 class="refresh-stream--message">{"Interference from Mars!\nRetrieving Connection "}&#9732;</h2>
+            <div class="modal-stream" onremove={(element, done) => onRefreshStreamRemove(element, done)}>
+              <h2 class="modal-stream--message">{"Interference from Mars!\nRetrieving Connection "}&#9732;</h2>
+            </div>
+          }
+        </section>
+        <section>
+          {
+            state.preventFlip !== 'normal' &&
+            <div class="modal-stream modal-stream--preventFlip" onremove={(element, done) => onPreventFlipRemove(element, done)}>
+              <h2 class="modal-stream--message">{"Dangerous Terrain. Changing Directions"}&#9888;</h2>
             </div>
           }
         </section>
