@@ -17,14 +17,6 @@ export const joystick = function joystick({ el, motors }) {
     manager.on('start', (eventStart, nipple) => {
         // console.log(evt);
         nipple.on('move', (eventMove, data) => throttledGetDataFromJoystick(eventMove, data));
-        
-        nipple.on('end', (evt, dta) => {
-            const preventFlip = motors.getPreventFlip();
-            if (preventFlip !== "normal") {
-                motors.set(60, false);
-            }
-            // motors.set(0, direction);
-        });
 
         interval = setInterval(() => motors.set(speed, direction), 100);
     });
@@ -47,6 +39,11 @@ export const joystick = function joystick({ el, motors }) {
     manager.on('end', (eventEnd) => {
         clearInterval(interval);
         console.log('[joystick interval]', interval);
+        const preventFlip = motors.getPreventFlip();
+        if (preventFlip !== "normal") {
+            return;
+        }
+
         speed = 0;
         console.log(eventEnd);
         motors.stop();
