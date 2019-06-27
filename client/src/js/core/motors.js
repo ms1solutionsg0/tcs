@@ -34,7 +34,6 @@ Motors.prototype.set = function (speed, directions) {
 
     if (this.sockets.io.connected) {
         if (preventFlipDirection !== 'normal') {
-            // this.stop();
             const goDirection = preventFlipDirection === "forward" ? this.direction.backward : this.direction.forward;
             const frame = this.frame.motors(60, goDirection, this.direction);
             this.sockets.sendMotors(frame);
