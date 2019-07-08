@@ -37,7 +37,7 @@ const actions = {
         setSignalLevel: value => state => ({ signalLevel: value }),
         setTemperature: value => state => ({ temperature: value }),
     },
-
+    preventFlip: value => state => ({ preventFlip: value }),
     motors: null,
     joystick: null,
     stream: null,

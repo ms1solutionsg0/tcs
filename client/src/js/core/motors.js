@@ -14,7 +14,6 @@ export const Motors = function(sockets) {
     };
 };
 
-
 Motors.prototype.stop = function() {
     if (this.sockets.io.connected) {
         var buf = new ArrayBuffer(4);
@@ -31,11 +30,25 @@ Motors.prototype.stop = function() {
 };
 
 Motors.prototype.set = function (speed, directions) {
+    const preventFlipDirection = this.sockets.getPreventFlip();
+
     if (this.sockets.io.connected) {
+        if (preventFlipDirection !== 'normal') {
+            const goDirection = preventFlipDirection === "forward" ? this.direction.backward : this.direction.forward;
+            const frame = this.frame.motors(60, goDirection, this.direction);
+            this.sockets.sendMotors(frame);
+            return;
+        }
+
         const frame = this.frame.motors(speed, directions, this.direction);
         console.log(helper.arrayToHex(this.frame.motorsArr));
         this.sockets.sendMotors(frame);
     } else {
         console.log("Connection not opened.");
     }
+}
+
+Motors.prototype.getPreventFlip = function() {
+    const preventFlipDirection = this.sockets.getPreventFlip();
+    return preventFlipDirection;
 }

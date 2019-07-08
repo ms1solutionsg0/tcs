@@ -1,5 +1,6 @@
 from killer import kill
 from log import logname
+from position import Position
 import os
 import argparse
 import sys
@@ -17,6 +18,7 @@ def start_server():
 
         http_server = HTTPserver()
         ws_server = WSserver(http_server.app)
+        position = Position(ws_server, http_server)
         ws_server.start()
         http_server.start()
     except OSError as e:

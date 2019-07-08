@@ -56,13 +56,16 @@ class WSnamespace(socketio.AsyncNamespace):
     async def on_reboot(self, sid):
         self.system.reboot()
 
+    async def set_flip_state(self, direction):
+        await self.sio.emit('response', {"type": "preventFlip", "value": direction }, namespace="/sockets")
+
 
 class WSserver():
     def __init__(self, app):
         super().__init__()
         self.sio = None
-        self.app = app
         self.namespace = WSnamespace('/sockets')
+        self.app = app
     
     def start(self):
         self.sio = socketio.AsyncServer(async_mode='aiohttp')
