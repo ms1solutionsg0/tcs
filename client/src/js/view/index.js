@@ -1,6 +1,5 @@
 import { h } from "hyperapp";
 
-// import { SplashScreen } from "./splashscreen";
 import { TopBar } from "./components/topbar";
 import { Stream } from "./components/stream";
 import { Settings } from "./components/settings";
