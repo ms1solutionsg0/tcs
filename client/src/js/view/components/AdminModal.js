@@ -2,7 +2,7 @@ import { h } from "hyperapp";
 
 import Numpad from "./Numpad";
 
-const ADMIN_PINS = ["1337", "1940", "1985"];
+const ADMIN_PINS = ["1933", "1337"];
 const MODAL_TIMEOUT = 30000; // 30 seconds
 let TIMEOUT;
 
