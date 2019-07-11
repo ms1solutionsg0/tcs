@@ -2,6 +2,13 @@ import io from 'socket.io-client';
 
 export const Sockets = function Sockets(actions) {
     this.preventFlip = 'normal';
+    
+    const preventFlipTrigger = (value) => {
+        actions.preventFlip(value);
+        this.preventFlip = value;
+        actions.motors.stop();
+    }
+
     this.io = io.connect('http://' + document.domain + '/sockets', {
         transports: ['websocket'],
     });
@@ -16,13 +23,11 @@ export const Sockets = function Sockets(actions) {
         const { type, value } = msg;
 
         if (type === "preventFlip") {
-            actions.preventFlip(value);
-            this.preventFlip = value;
             if (value === "forward" || value === "backward") {
-                actions.motors.stop();
+                preventFlipTrigger(value);
                 setTimeout(() => actions.motors.set(60, value), 500);
             } else {
-                actions.motors.stop();
+                setTimeout(() => preventFlipTrigger(value) , 1500);
             }
         }
     });
