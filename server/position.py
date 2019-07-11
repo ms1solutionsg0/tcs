@@ -48,9 +48,9 @@ class Position():
             
             self.previous_direction = self.direction
             
-            if z < -45.0:
+            if z < -30:
                 self.direction = Direction.FORWARD
-            elif z > 45.0:
+            elif z > 30:
                 self.direction = Direction.BACKWARD
             else:
                 self.direction = Direction.NORMAL
