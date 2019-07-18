@@ -2,5 +2,7 @@ import { h } from 'hyperapp';
 
 export const Stream = ({ stream, mode }) =>
     <div class="stream-wrapper">
-        <video id="stream" class={(mode === 'drive') ? 'stream stream--drive-mode' : 'stream stream--grab-mode'} oncreate={(el) => stream.start(el)} />
+        <video id="stream" class="stream stream--drive-mode" oncreate={(el) => stream.start(el)}>
+            Sorry, your browser doesn't support embedded videos.
+        </video>
     </div>;

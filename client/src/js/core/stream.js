@@ -35,6 +35,7 @@ Stream.prototype.start = function() {
 
 Stream.prototype.createPeerConnection = function() {
     this.peerConnection = new window.RTCPeerConnection(null);
+    // TODO: NEAL: ^^ works, bottom is older code.
 
     this.peerConnection.onicecandidate = (event) => {
         if (event.candidate) {
@@ -56,9 +57,42 @@ Stream.prototype.createPeerConnection = function() {
 
     this.peerConnection.ontrack = (event) => {
         console.log("[stream] remote stream added:", event.streams[0]);
+        console.log('NEAL: event ontrack: ', event);
+        const mediaStream = event.streams[0];
         let remoteVideoElement = document.getElementById('stream');
-        remoteVideoElement.srcObject = event.streams[0];
-        remoteVideoElement.play();
+        remoteVideoElement.autoplay = "true";
+        remoteVideoElement.defaultMuted = "true";
+        remoteVideoElement.muted = "muted";
+        remoteVideoElement.playsinline = "true";
+
+        if ('srcObject' in remoteVideoElement) {
+            remoteVideoElement.srcObject = mediaStream;
+        } else {
+            // Avoid using this in new browsers, as it is going away.
+            remoteVideoElement.src = URL.createObjectURL(mediaStream);
+        }
+        // remoteVideoElement.load();
+        console.log("NEAL: remoteVideoElement: ", remoteVideoElement);
+        let playPromise = remoteVideoElement.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then((_) => {
+                console.log("NEAL:---------------------------------------------------------------------------------");
+                console.log("NEAL: success playpromise");
+                console.log("NEAL: muted?: ", remoteVideoElement.muted);
+                console.log("NEAL: networkState?: ", remoteVideoElement.networkState);
+                console.log("NEAL: readyState?: ", remoteVideoElement.readyState);
+                console.log("NEAL: mediaStream: ", mediaStream);
+                console.log("NEAL:---------------------------------------------------------------------------------");
+                console.log("NEAL:---------------------------------------------------------------------------------");
+            }).catch((err) => {
+                console.error("NEAL: playPromise error: ", err);
+                console.error("NEAL: what is the error?: ", remoteVideoElement.error);
+            })
+        } else {
+            console.error("NEAL: playPromise is undefined: ", playPromise);
+            remoteVideoElement.load();
+        }
     }
 
     this.peerConnection.onremovestream = () => console.log('[stream] remove');
@@ -108,12 +142,15 @@ Stream.prototype.open = function() {
 
 Stream.prototype.addIceCandidates = function () {
     
+    console.log("NEAL: iceCandidates, ", this.iceCandidates);
+    debugger;
     this.iceCandidates.forEach((candidate) => {
         this.peerConnection.addIceCandidate(candidate,
             function() {
                 console.log("[stream] IceCandidate added: " + JSON.stringify(candidate));
             },
             function(error) {
+                console.error("NEAL: addicecandidate error: ", error);
                 console.error("[stream] addIceCandidate error: " + error);
             }
         );
@@ -122,7 +159,6 @@ Stream.prototype.addIceCandidates = function () {
 }
 
 Stream.prototype.message = function(event) {
-
     var msg = JSON.parse(event.data);
     var what = msg.what;
     var data = msg.data;
@@ -141,6 +177,7 @@ Stream.prototype.message = function(event) {
             break;
 
         case "message":
+            console.log("NEAL: error message thing, event: ", event);
             console.error('[stream]',msg.data);
             break;
 
@@ -149,11 +186,13 @@ Stream.prototype.message = function(event) {
                 console.log("[stream] Ice Gathering Complete");
                 break;
             }
+
             var elt = JSON.parse(msg.data);
             let candidate = new RTCIceCandidate({
                 sdpMLineIndex: elt.sdpMLineIndex,
                 candidate: elt.candidate
             });
+
             this.iceCandidates.push(candidate);
             if (this.remoteDesc) {
                 this.addIceCandidates();
@@ -162,6 +201,7 @@ Stream.prototype.message = function(event) {
 
 
         case "iceCandidates":
+            console.log("NEAL: hit iceCandidates, not iceCandidate");
             var candidates = JSON.parse(msg.data);
             for (var i = 0; candidates && i < candidates.length; i++) {
                 var elt = candidates[i];
