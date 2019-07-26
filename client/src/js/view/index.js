@@ -46,13 +46,25 @@ const view = (state, actions) => {
       return;
     }
 
-    if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) {
-      element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullScreen) {
-      element.webkitRequestFullScreen();
+    if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen();
+    } else {
+      if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+      } else {
+        element.requestFullscreen();
+      }
     }
+
+    // if (element.requestFullscreen) {
+    //   element.requestFullscreen();
+    // } else if (element.mozRequestFullScreen) {
+    //   element.mozRequestFullScreen();
+    // } else if (element.webkitRequestFullScreen) {
+    //   element.webkitRequestFullScreen();
+    // } else if (element.msRequestFullScreen) {
+    //   element.msRequestFullScreen();
+    // }
   };
 
   return (

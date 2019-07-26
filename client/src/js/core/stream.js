@@ -34,8 +34,7 @@ Stream.prototype.start = function() {
 }
 
 Stream.prototype.createPeerConnection = function() {
-    this.peerConnection = new window.RTCPeerConnection(null);
-    // TODO: NEAL: ^^ works, bottom is older code.
+    this.peerConnection = new window.RTCPeerConnection();
 
     this.peerConnection.onicecandidate = (event) => {
         if (event.candidate) {
@@ -57,7 +56,6 @@ Stream.prototype.createPeerConnection = function() {
 
     this.peerConnection.ontrack = (event) => {
         console.log("[stream] remote stream added:", event.streams[0]);
-        console.log('NEAL: event ontrack: ', event);
         const mediaStream = event.streams[0];
         let remoteVideoElement = document.getElementById('stream');
         remoteVideoElement.autoplay = "true";
@@ -71,28 +69,23 @@ Stream.prototype.createPeerConnection = function() {
             // Avoid using this in new browsers, as it is going away.
             remoteVideoElement.src = URL.createObjectURL(mediaStream);
         }
-        // remoteVideoElement.load();
-        console.log("NEAL: remoteVideoElement: ", remoteVideoElement);
+  
         let playPromise = remoteVideoElement.play();
 
         if (playPromise !== undefined) {
             playPromise.then((_) => {
-                console.log("NEAL:---------------------------------------------------------------------------------");
-                console.log("NEAL: success playpromise");
-                console.log("NEAL: muted?: ", remoteVideoElement.muted);
-                console.log("NEAL: networkState?: ", remoteVideoElement.networkState);
-                console.log("NEAL: readyState?: ", remoteVideoElement.readyState);
-                console.log("NEAL: mediaStream: ", mediaStream);
-                console.log("NEAL:---------------------------------------------------------------------------------");
-                console.log("NEAL:---------------------------------------------------------------------------------");
+                // will start video
             }).catch((err) => {
-                console.error("NEAL: playPromise error: ", err);
-                console.error("NEAL: what is the error?: ", remoteVideoElement.error);
+                console.error("[stream] Webrtc error: ", err);
             })
         } else {
-            console.error("NEAL: playPromise is undefined: ", playPromise);
+            console.error("[stream] Webrtc promise error");
             remoteVideoElement.load();
         }
+    }
+
+    this.peerConnection.onloadedmetadata = (event) => {
+        console.log('NEAL: onloadedmetadata:', event);
     }
 
     this.peerConnection.onremovestream = () => console.log('[stream] remove');
@@ -142,15 +135,12 @@ Stream.prototype.open = function() {
 
 Stream.prototype.addIceCandidates = function () {
     
-    console.log("NEAL: iceCandidates, ", this.iceCandidates);
-    debugger;
     this.iceCandidates.forEach((candidate) => {
         this.peerConnection.addIceCandidate(candidate,
             function() {
                 console.log("[stream] IceCandidate added: " + JSON.stringify(candidate));
             },
             function(error) {
-                console.error("NEAL: addicecandidate error: ", error);
                 console.error("[stream] addIceCandidate error: " + error);
             }
         );
@@ -177,7 +167,6 @@ Stream.prototype.message = function(event) {
             break;
 
         case "message":
-            console.log("NEAL: error message thing, event: ", event);
             console.error('[stream]',msg.data);
             break;
 
@@ -201,7 +190,6 @@ Stream.prototype.message = function(event) {
 
 
         case "iceCandidates":
-            console.log("NEAL: hit iceCandidates, not iceCandidate");
             var candidates = JSON.parse(msg.data);
             for (var i = 0; candidates && i < candidates.length; i++) {
                 var elt = candidates[i];
@@ -249,7 +237,9 @@ Stream.prototype._onRemoteSdpError = function(event) {
 }
 
 Stream.prototype.close = function(event) {
+    console.log("NEAL: stream.close");
     if (this.peerConnection) {
+        console.log("NEAL: will try to close");
         this.peerConnection.close();
     }
 }
