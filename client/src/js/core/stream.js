@@ -84,10 +84,6 @@ Stream.prototype.createPeerConnection = function() {
         }
     }
 
-    this.peerConnection.onloadedmetadata = (event) => {
-        console.log('NEAL: onloadedmetadata:', event);
-    }
-
     this.peerConnection.onremovestream = () => console.log('[stream] remove');
 
     this.peerConnection.oniceconnectionstatechange = (evt) => {
@@ -237,9 +233,7 @@ Stream.prototype._onRemoteSdpError = function(event) {
 }
 
 Stream.prototype.close = function(event) {
-    console.log("NEAL: stream.close");
     if (this.peerConnection) {
-        console.log("NEAL: will try to close");
         this.peerConnection.close();
     }
 }
