@@ -80,7 +80,7 @@ Stream.prototype.createPeerConnection = function() {
             })
         } else {
             console.error("[stream] Webrtc promise error");
-            remoteVideoElement.load();
+            remoteVideoElement.play();
         }
     }
 

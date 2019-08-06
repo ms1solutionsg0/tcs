@@ -55,16 +55,6 @@ const view = (state, actions) => {
         element.requestFullscreen();
       }
     }
-
-    // if (element.requestFullscreen) {
-    //   element.requestFullscreen();
-    // } else if (element.mozRequestFullScreen) {
-    //   element.mozRequestFullScreen();
-    // } else if (element.webkitRequestFullScreen) {
-    //   element.webkitRequestFullScreen();
-    // } else if (element.msRequestFullScreen) {
-    //   element.msRequestFullScreen();
-    // }
   };
 
   return (
