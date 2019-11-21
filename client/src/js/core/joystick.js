@@ -34,7 +34,7 @@ export const joystick = function joystick({ el, motors }) {
 
     let throttledGetDataFromJoystick = throttle((eventMove, data) => getDataFromJoystick(eventMove, data), 100, { trailing: false });
 
-    let treshold = (force) => (force >= 1 ? 100 : (force * 100).toFixed(0));
+    let treshold = (force) => (force >= 0.6 ? 60 : (force * 100).toFixed(0));
 
     manager.on('end', (eventEnd) => {
         clearInterval(interval);
