@@ -17,8 +17,8 @@ const FRONT_LEFT_INDEX = 1;
 const BACK_LEFT_INDEX = 2;
 const BACK_RIGHT_INDEX = 3;
 
-const verySlowK = 0.3;
-const k = 1.05;
+const verySlowK = 0.225;
+const k = .75;
 
 Frame.prototype.motor = function(value) {
     // Multiplying by this value should make possible to write directly to PWM
