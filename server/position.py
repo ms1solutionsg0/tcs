@@ -23,7 +23,7 @@ class Position():
         self.previous_direction = Direction.NORMAL
 
     async def prevent_flip(self):
-        await asyncio.sleep(2)
+#        await asyncio.sleep(2)
         ser = serial.Serial(port='/dev/ttyUSB0', timeout=10)
         ser.flushInput()
         ttyusb0=os.path.exists('/dev/ttyUSB0')
@@ -48,9 +48,9 @@ class Position():
             
             self.previous_direction = self.direction
             
-            if ((y < -7 or y > 7) and z < -18) or (z < -30):
+            if ((z < -6 or z > 6) and y < -15) or (y < -27):
                 self.direction = Direction.FORWARD
-            elif ((y < -7 or y > 7) and z > 18) or (z > 30):
+            elif ((z < -6 or z > 6) and y > 15) or (y > 20):
                 self.direction = Direction.BACKWARD
             else:
                 self.direction = Direction.NORMAL
