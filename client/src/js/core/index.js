@@ -19,7 +19,9 @@ const core = (actions) => {
         actions.stream.start();
     });
     window.addEventListener('offline', () => {
+
         actions.stream.preventReconnect();
+        window.alert("offline");
         actions.stream.stop();
     })
 
