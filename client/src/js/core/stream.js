@@ -68,6 +68,7 @@ Stream.prototype.createPeerConnection = function() {
         switch(iceConnectionState) {
             case "connected":
                 this.actions.setMsiStreamRefreshPending(false);
+                alert("msiStreamRefreshPending false");
                 break;
             case "failed":
             case "closed":
@@ -82,6 +83,7 @@ Stream.prototype.createPeerConnection = function() {
 Stream.prototype.reconnect = function() {
     clearTimeout(this.timeout);
     this.stop();
+    alert("reconnect");
     this.timeout = setTimeout(this.start.bind(this), 5000);
 }
 

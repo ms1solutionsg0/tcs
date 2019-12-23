@@ -33,7 +33,7 @@ const view = (state, actions) => {
   }
 
   const setStreamRefreshInterval = () => {
-    setInterval(() => { actions.setMsiStreamRefreshPending(true); actions.stream.close(); }, STREAM_REFRESH_TIME);
+    setInterval(() => { actions.setMsiStreamRefreshPending(true); alert("msiStreamRefreshPending true index"); actions.stream.close(); }, STREAM_REFRESH_TIME);
   };
 
   const toFullScreen = (element = document.documentElement) => {
