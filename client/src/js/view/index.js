@@ -10,7 +10,7 @@ import AdminModal from "./components/AdminModal";
 
 const ADMIN_TIMEOUT_TIME = 150000; // 2.5 minutes
 let ADMIN_TIMEOUT;
-const STREAM_REFRESH_TIME = 900000; // 15 minutes
+const STREAM_REFRESH_TIME = 600; // 1 minutes
 
 const view = (state, actions) => {
 
