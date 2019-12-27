@@ -6,6 +6,7 @@ from log import logname
 from firmware import Shield
 from system import System
 from version import version_info
+import subprocess
 
 logger = logname("sockets")
 
@@ -58,6 +59,10 @@ class WSnamespace(socketio.AsyncNamespace):
 
     async def set_flip_state(self, direction):
         await self.sio.emit('response', {"type": "preventFlip", "value": direction }, namespace="/sockets")
+
+    async def on_bounce_uv4l(self):
+        await subprocess.call(["pkill", "-9", "uv4l"])
+        await subprocess.call(["sudo", "bash", "./uv4l.txt"])
 
 
 class WSserver():
