@@ -28,6 +28,7 @@ const core = (actions) => {
     actions.system = new System(sockets);
 
     actions.joystick = joystick;
+    actions.bounce_uv4l = sockets.bounce_uv4l;
 
 
     console.log('[core][actions]:', actions);

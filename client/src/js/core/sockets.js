@@ -49,3 +49,6 @@ Sockets.prototype.getPreventFlip = function getPreventFlip() {
     return this.preventFlip;
 }
 
+Sockets.prototype.bounce_uv4l = function bounce_uv4l() {
+    this.io.emit('bounce_uv4l');
+};

@@ -61,8 +61,8 @@ class WSnamespace(socketio.AsyncNamespace):
         await self.sio.emit('response', {"type": "preventFlip", "value": direction }, namespace="/sockets")
 
     async def on_bounce_uv4l(self):
-        await subprocess.call(["pkill", "-9", "uv4l"])
-        await subprocess.call(["sudo", "bash", "./uv4l.txt"])
+        subprocess.call(["sudo", "pkill", "-9", "uv4l"])
+        subprocess.call(["sudo", "bash", "./uv4l.txt"])
 
 
 class WSserver():

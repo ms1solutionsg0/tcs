@@ -11,6 +11,7 @@ import AdminModal from "./components/AdminModal";
 const ADMIN_TIMEOUT_TIME = 150000; // 2.5 minutes
 let ADMIN_TIMEOUT;
 const STREAM_REFRESH_TIME = 900000; // 15 minutes
+let UV4L_TIMEOUT;
 
 const view = (state, actions) => {
 
@@ -55,6 +56,14 @@ const view = (state, actions) => {
     }
   };
 
+  const setUV4LTimeout = () => {
+    UV4L_TIMEOUT = setTimeout(actions.bounce_uv4l, 60000);
+  }
+
+  const clearUV4LTimeout = () {
+    clearTimeout(UV4L_TIMEOUT)
+  }
+
   return (
     <main oncreate={() => {setStreamRefreshInterval(); toFullScreen()}}>
       <section>
@@ -77,7 +86,7 @@ const view = (state, actions) => {
         <section>
           {
             state.msiStreamRefreshPending &&
-            <div class="modal-stream" onremove={(element, done) => onRefreshStreamRemove(element, done)}>
+            <div class="modal-stream" oncreate={(element, done) => setUV4LTimeout()} onremove={(element, done) => {clearUV4LTimout(); onRefreshStreamRemove(element, done)}}>
               <h2 class="modal-stream--message">{"Interference from Mars!\nRetrieving Connection "}&#9732;</h2>
             </div>
           }
